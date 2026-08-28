@@ -1,0 +1,1614 @@
+/* ==========================================================================
+   United States Universities For Ukraine — styles.css
+
+   Contents
+   1. Design tokens & reset
+   2. Shared helpers (container, buttons, reveal animation)
+   3. Header & navigation (pill bar, dropdowns, mobile menu)
+   4. Hero (headline, question box, chips)
+   5. Brand band (logos on navy gradient)
+   6. Features (numbered rows)
+   7. FAQ (accordion)
+   8. Closing band
+   9. Footer
+   10. Responsive breakpoints
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens & reset
+   -------------------------------------------------------------------------- */
+/* All digits site-wide render in Roboto (installed copy first, then
+   Google's hosted woff2 so every visitor gets it). Letters are
+   untouched — the unicode-range only covers 0-9. The ONE exception is
+   the big countdown numbers, which keep the geometric face below. */
+@font-face {
+  font-family: "USUFU Numerals";
+  src: local("Roboto"), local("Roboto-Regular"),
+       url(https://fonts.gstatic.com/s/roboto/v32/KFOmCnqEu92Fr1Mu4mxK.woff2) format("woff2");
+  unicode-range: U+0030-0039;
+}
+
+@font-face {
+  font-family: "USUFU Numerals";
+  font-weight: 500 700;
+  src: local("Roboto Bold"), local("Roboto-Bold"), local("Roboto Medium"),
+       url(https://fonts.gstatic.com/s/roboto/v32/KFOlCnqEu92Fr1MmWUlfBBc4.woff2) format("woff2");
+  unicode-range: U+0030-0039;
+}
+
+/* Countdown-only digits (timelines page) — unchanged geometric look */
+@font-face {
+  font-family: "USUFU Count";
+  src: local("Proxima Nova"), local("ProximaNova-Regular"), local("Montserrat"),
+       local("Helvetica Neue"), local("Arial");
+  unicode-range: U+0030-0039;
+}
+
+@font-face {
+  font-family: "USUFU Count";
+  font-weight: 500 700;
+  src: local("Proxima Nova Semibold"), local("ProximaNova-Semibold"),
+       local("Proxima Nova Bold"), local("ProximaNova-Bold"),
+       local("Helvetica Neue Bold"), local("Arial Bold");
+  unicode-range: U+0030-0039;
+}
+
+:root {
+  /* Brand palette */
+  --navy: #0f152a;
+  --navy-soft: #232c4e;
+  --beige: #fefdfa;
+  --beige-dim: #f4f1e9;
+
+  /* Neutral “elite” tones for the bar and buttons */
+  --ink: #121317;
+  --ink-hover: #23252c;
+  --grey-line: rgba(15, 21, 42, 0.12);
+  --grey-text: rgba(15, 21, 42, 0.66);
+  /* Source lines, provenance notes and other small print. Quieter than
+     --grey-text but still >=5:1 on beige AND on the sand notice surface —
+     the old rgba(...,0.45) measured 2.95:1, well under the 4.5:1 minimum. */
+  --grey-faint: rgba(15, 21, 42, 0.62);
+  --white-line: rgba(254, 253, 250, 0.16);
+  --white-text: rgba(254, 253, 250, 0.72);
+
+  /* Typography — "USUFU Numerals" only covers digits (see @font-face
+     above), so numbers get Proxima Nova while letters keep the brand
+     faces */
+  --font-serif: "USUFU Numerals", "Playfair Display", "Times New Roman", serif;
+  --font-sans: "USUFU Numerals", "Oswald", "Helvetica Neue", sans-serif;
+
+  /* Layout */
+  --container: 1180px;
+  /* ONE width for every interactive tool surface — cards, their result
+     grids and the notes that frame them. Before this existed the same
+     .calc-card rendered at 720/860/940/1040/1180 depending on the page,
+     so stacked boxes never shared an edge. Do not add a new width here:
+     if a tool needs the full container it is a full-bleed component
+     (.hstrip), not a card. */
+  --tool-col: 940px;
+  /* Comfortable reading measure for prose set in Oswald. Used as inner
+     padding on wide note boxes so the box still aligns with the column
+     while the text stays around 95 characters a line. */
+  --prose-inset: clamp(22px, 8vw, 110px);
+  --radius-card: 22px;
+  --radius-pill: 999px;
+  --header-height: 64px;
+  --shadow-soft: 0 18px 40px -18px rgba(15, 21, 42, 0.35);
+
+  /* Vertical rhythm — the ONE place section spacing is tuned.
+     Before these existed, every gap was a hard-coded literal and the
+     same value (88px) was repeated in 21 separate section rules, so
+     nothing was tunable and none of it shrank on a phone. Any new
+     section must use these; do not add a fresh px literal.
+     The three tiers below are the entire responsive spacing story. */
+  --sec-y: 60px;          /* standard section padding (was 88) */
+  --sec-y-sm: 16px;       /* short top pad on a section under a hero (was 10/20) */
+  --sec-y-lg: 56px;       /* the taller band family (was 78/82) */
+  --sec-y-band: 64px;     /* full-bleed dark bands (was 92/96) */
+  --hero-top: 132px;      /* clearance under the fixed pill nav, which
+                             occupies 18–82px (was 180/190) */
+  --hero-top-lead: 118px; /* the home brand band, which opens the page (was 160) */
+  --hero-bottom: 40px;    /* hero → first section (was 54) */
+  --head-gap: 32px;       /* .section-head trailing margin (was 46) */
+  --rule-gap: 36px;       /* margin above a ruled article h2 (was 54) */
+  --rule-pad: 26px;       /* and its padding-top (was 40) — 94px total before */
+}
+
+/* The whole mobile spacing story: re-point the tokens, and every
+   section on all 42 pages follows. */
+@media (max-width: 860px) {
+  :root {
+    --sec-y: 48px;
+    --sec-y-lg: 44px;
+    --sec-y-band: 52px;
+    --hero-top: 116px;
+    --hero-top-lead: 104px;
+    --hero-bottom: 32px;
+    --head-gap: 26px;
+    --rule-gap: 30px;
+    --rule-pad: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --sec-y: 40px;
+    --sec-y-lg: 38px;
+    --sec-y-band: 44px;
+    --hero-top: 104px;
+    --hero-top-lead: 96px;
+    --hero-bottom: 28px;
+    --head-gap: 22px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Rubber-band overscroll past the footer reveals the canvas — paint
+     it footer navy so a hard scroll never flashes white */
+  background-color: var(--navy);
+}
+
+/* Keep anchor targets clear of the fixed header when jumping to #ids */
+[id] {
+  scroll-margin-top: 110px;
+}
+
+body {
+  position: relative;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  color: var(--navy);
+  background: var(--beige);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Overscroll ABOVE the page: continue the hero's beige with the same
+   soft navy wash rising toward the seam, so the top bounce matches the
+   first pixels of every page instead of flashing white or navy */
+body::before {
+  content: "";
+  position: absolute;
+  top: -120vh;
+  left: 0;
+  right: 0;
+  height: 120vh;
+  pointer-events: none;
+  background:
+    radial-gradient(90% 30% at 50% 97%, rgba(15, 21, 42, 0.26), transparent 70%),
+    linear-gradient(var(--beige), var(--beige));
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  /* Images carry width/height attributes to reserve their space and stop
+     layout shift. Those attributes are presentational hints, so any rule
+     setting only `width` would otherwise inherit the attribute's height and
+     distort the picture — this keeps the ratio no matter what. */
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+/* Keyboard users land on this first; it stays out of the way until it is
+   focused, then drops into the top-left over the fixed header. Without it
+   every page costs ~15 tab presses before the content starts. */
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 200;
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--beige);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  box-shadow: 0 10px 30px -10px rgba(15, 21, 42, 0.6);
+  transform: translateY(-160%);
+  transition: transform 0.18s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 3px solid var(--beige);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   2. Shared helpers
+   -------------------------------------------------------------------------- */
+.container {
+  width: min(var(--container), calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 26px;
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-cta {
+  background: var(--beige);
+  color: var(--ink);
+  padding: 10px 22px;
+}
+
+.btn-cta:hover {
+  background: var(--beige-dim);
+}
+
+.btn-dark {
+  background: var(--ink);
+  color: var(--beige);
+}
+
+.btn-dark:hover {
+  background: var(--ink-hover);
+}
+
+.btn-light {
+  background: var(--beige);
+  color: var(--navy);
+}
+
+.btn-light:hover {
+  background: var(--beige-dim);
+}
+
+/* Scroll-in reveal (activated by js/main.js) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+/* Side variants — used by the leveled timelines to slide stops in
+   from the left/right onto the central spine */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-48px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(48px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.is-visible,
+.reveal-left.is-visible,
+.reveal-right.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* The reveal classes start at opacity 0 and are un-hidden by an observer in
+   js/main.js. If that script never runs — JS disabled, a blocked file, a
+   parse error — the content would stay invisible forever. Each page carries
+   a <noscript> that sets this class, which puts everything back. */
+.no-js .reveal,
+.no-js .reveal-left,
+.no-js .reveal-right {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* js/main.js stamps this class on <html> while the window is being
+   resized or zoomed, so breakpoint changes never flash mid-transition */
+html.no-transitions *,
+html.no-transitions *::before,
+html.no-transitions *::after {
+  transition: none !important;
+}
+
+/* Reveal animations slide elements in from the sides; `clip` stops
+   those off-screen starts from widening the page (unlike `hidden`,
+   it doesn't create a scroll container, so position: sticky survives) */
+@supports (overflow-x: clip) {
+  main {
+    overflow-x: clip;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. Header & navigation
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: fixed;
+  inset: 18px 0 auto;
+  z-index: 100;
+}
+
+/* Liquid glass: translucent navy over a strong blur, with a light rim
+   on top — reads as frosted glass over both dark and beige sections.
+
+   The blur lives on a ::before layer, NOT on .nav-bar itself: an
+   element with backdrop-filter becomes the filter root for all its
+   descendants, which would silently disable the dropdowns' own blur.
+   Keeping .nav-bar clean lets the submenus blur the real page. */
+.nav-bar {
+  position: relative;
+  width: min(var(--container), calc(100% - 32px));
+  margin-inline: auto;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 12px 0 20px;
+  border: 1px solid rgba(254, 253, 250, 0.16);
+  border-radius: var(--radius-pill);
+  box-shadow:
+    inset 0 1px 0 rgba(254, 253, 250, 0.18),
+    0 18px 40px -18px rgba(15, 21, 42, 0.5);
+  color: var(--beige);
+}
+
+.nav-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(26, 34, 62, 0.58), rgba(15, 21, 42, 0.46));
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(22px) saturate(180%);
+}
+
+/* Browsers without backdrop-filter get a near-solid bar instead of mud */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .nav-bar::before,
+  .dropdown {
+    background: rgba(15, 21, 42, 0.96);
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand-seal {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.brand-name em {
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* --- Dropdown menus --- */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 0.92rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--white-text);
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-item.open .nav-link {
+  color: var(--beige);
+  background: rgba(254, 253, 250, 0.08);
+}
+
+/* Highlights the section the visitor is currently in */
+.nav-link[aria-current="page"] {
+  color: var(--beige);
+}
+
+.caret {
+  width: 10px;
+  height: 6px;
+  transition: transform 0.2s ease;
+}
+
+.nav-item.open .caret {
+  transform: rotate(180deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  translate: -50% 0;
+  min-width: 220px;
+  padding: 8px;
+  list-style: none;
+  /* Same glass recipe as .nav-bar so open menus match the bar exactly */
+  background: linear-gradient(120deg, rgba(26, 34, 62, 0.58), rgba(15, 21, 42, 0.46));
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgba(254, 253, 250, 0.16);
+  border-radius: 16px;
+  box-shadow:
+    inset 0 1px 0 rgba(254, 253, 250, 0.14),
+    var(--shadow-soft);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.nav-item.open .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  color: var(--white-text);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.dropdown a:hover {
+  background: rgba(254, 253, 250, 0.08);
+  color: var(--beige);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Never let the pill button wrap or get crushed when the bar tightens
+   (e.g. browser zoom at 110%) */
+.btn-cta {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Thin divider between the search icon and the hamburger —
+   only shown when the hamburger itself is visible (mobile) */
+.nav-sep {
+  display: none;
+  width: 1px;
+  height: 24px;
+  background: rgba(254, 253, 250, 0.22);
+}
+
+/* Round icon button (search) */
+.nav-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-pill);
+  color: var(--white-text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-icon-btn:hover {
+  background: rgba(254, 253, 250, 0.1);
+  color: var(--beige);
+}
+
+.nav-icon-btn svg {
+  width: 19px;
+  height: 19px;
+}
+
+/* --- Mobile hamburger (hidden on desktop) --- */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+}
+
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  background: var(--beige);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.nav-open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* --------------------------------------------------------------------------
+   4. Hero
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  padding: var(--hero-top) 0 var(--sec-y-band);
+  overflow: hidden;
+}
+
+/* Soft navy wash at the top of the page, fading into beige */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(90% 65% at 50% -18%, rgba(15, 21, 42, 0.34), transparent 68%),
+    radial-gradient(38% 42% at 12% 4%, rgba(35, 44, 78, 0.16), transparent 70%),
+    radial-gradient(38% 42% at 88% 4%, rgba(35, 44, 78, 0.16), transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  max-width: 780px;
+  text-align: center;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+}
+
+.hero-sub {
+  max-width: 540px;
+  margin: 22px auto 0;
+  font-size: 1.02rem;
+  color: var(--grey-text);
+}
+
+/* --- Audience path cards (Where are you on the journey?) --- */
+.audience-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  max-width: 1020px;
+  margin: 36px auto 0;
+}
+
+.audience-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 28px 28px 22px;
+  text-align: left;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-top: 3px solid var(--navy);
+  border-radius: var(--radius-card);
+  box-shadow: 0 20px 44px -34px rgba(15, 21, 42, 0.45);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Ghost numeral in the corner — 01 / 02 / 03 */
+/* line-height stays above 1: the numeral face overshoots its em box, and
+   the card clips (overflow:hidden), so a 1.0 line-height sliced the tops
+   of the digits flat against the card's top border. */
+.audience-card::after {
+  position: absolute;
+  right: 18px;
+  top: 6px;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 4.6rem;
+  line-height: 1.28;
+  color: rgba(15, 21, 42, 0.06);
+  pointer-events: none;
+  transition: color 0.35s ease;
+}
+
+.audience-card:nth-child(1)::after { content: "01"; }
+.audience-card:nth-child(2)::after { content: "02"; }
+.audience-card:nth-child(3)::after { content: "03"; }
+
+/* Navy wash rises from the bottom on hover; text flips to beige */
+.audience-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(200deg, #232c4e -20%, var(--navy) 80%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.audience-card > * {
+  position: relative;
+  transition: color 0.35s ease;
+}
+
+.audience-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 56px -28px rgba(15, 21, 42, 0.6);
+}
+
+.audience-card:hover::before {
+  opacity: 1;
+}
+
+.audience-card:hover::after {
+  color: rgba(254, 253, 250, 0.12);
+}
+
+.audience-card:hover .audience-eyebrow,
+.audience-card:hover .audience-cta {
+  color: var(--white-text);
+}
+
+.audience-card:hover .audience-name {
+  color: var(--beige);
+}
+
+.audience-eyebrow {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.audience-name {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.65rem;
+  line-height: 1.2;
+  color: var(--navy);
+}
+
+.audience-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 0.84rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+
+.audience-cta svg {
+  width: 15px;
+  height: 15px;
+}
+
+.audience-card:hover .audience-cta {
+  color: var(--navy);
+  gap: 12px;
+}
+
+/* --- Chips (topic filters, breadcrumbs) --- */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.chip {
+  padding: 8px 18px;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.65);
+  font-size: 0.86rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.chip:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+/* --------------------------------------------------------------------------
+   5. Brand band
+   -------------------------------------------------------------------------- */
+.brand-band {
+  padding: var(--sec-y-band) 0;
+  background:
+    radial-gradient(70% 90% at 50% 115%, rgba(254, 253, 250, 0.2), transparent 70%),
+    linear-gradient(175deg, var(--navy) 0%, #1a2340 55%, var(--navy) 100%);
+}
+
+/* When the band opens the page (home), clear the fixed header */
+.brand-band--lead {
+  padding: var(--hero-top-lead) 0 var(--sec-y);
+}
+
+/* Hero that follows the lead band no longer needs header clearance,
+   and its navy top wash continues the band above it */
+.hero--after-band {
+  padding-top: var(--sec-y-band);
+}
+
+.brand-band-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.band-seal {
+  width: 190px;
+  height: auto;
+}
+
+.band-wordmark {
+  width: min(560px, 86%);
+  margin-top: 34px;
+}
+
+.band-statement {
+  margin-top: 44px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--beige);
+}
+
+/* --------------------------------------------------------------------------
+   6. Features
+   -------------------------------------------------------------------------- */
+.features {
+  padding: 28px 0 0;
+}
+
+/* Per row — a four-row feature list multiplies this, so it is the
+   single heaviest contributor on the home and level pages. */
+.feature {
+  padding: 40px 0;
+}
+
+/* Alternating soft tints behind the rows */
+.feature:nth-child(even) {
+  background: var(--beige-dim);
+}
+
+.feature-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 72px);
+}
+
+/* Swap sides on every other row. The tracks swap with the order, so the
+   artwork keeps ONE width all the way down instead of alternating between
+   the 6fr and the 5fr track. */
+.feature:nth-child(even) .feature-inner {
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+}
+
+.feature:nth-child(even) .feature-card {
+  order: 2;
+}
+
+.feature-card {
+  padding: 32px 30px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 20px 44px -32px rgba(15, 21, 42, 0.4);
+}
+
+.feature-index {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.feature-title {
+  margin-top: 14px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.2;
+}
+
+.feature-text {
+  margin: 16px 0 26px;
+  color: var(--grey-text);
+}
+
+/* Media placeholder — replace with a real <img> later */
+.media-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  border: 1px dashed rgba(15, 21, 42, 0.25);
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(65% 80% at 30% 20%, rgba(35, 44, 78, 0.1), transparent 70%),
+    radial-gradient(65% 80% at 75% 85%, rgba(15, 21, 42, 0.08), transparent 70%);
+}
+
+.media-frame span {
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey-faint);
+}
+
+/* Brand fill for a media frame: the near-white seal on its intended navy
+   ground, with a soft off-centre glow so it does not read as a flat block. */
+.media-frame--brand {
+  border: none;
+  background:
+    radial-gradient(70% 90% at 32% 26%, var(--navy-soft), transparent 72%),
+    var(--navy);
+}
+
+.media-frame--brand img {
+  width: 60%;
+  max-width: 300px;
+  height: auto;
+}
+
+/* Photo fill for a media frame: the artwork is composed 16:9 on the site's
+   own navy, so it sits edge to edge with no placeholder chrome around it. */
+.media-frame--photo {
+  display: block;
+  aspect-ratio: 16 / 9;
+  border: none;
+  overflow: hidden;
+  background: var(--navy);
+}
+
+.media-frame--photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   7. FAQ
+   -------------------------------------------------------------------------- */
+.faq {
+  padding: var(--sec-y-band) 0;
+}
+
+.faq-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  gap: clamp(32px, 6vw, 90px);
+  align-items: start;
+}
+
+.faq-title {
+  position: sticky;
+  top: 120px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  line-height: 1.18;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--grey-line);
+}
+
+.faq-item:first-child {
+  border-top: 1px solid var(--grey-line);
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  padding: 22px 4px;
+  text-align: left;
+  font-size: 1.02rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+}
+
+.faq-question:hover {
+  color: var(--navy-soft);
+}
+
+/* Plus icon drawn with two bars; rotates into a minus when open */
+.faq-icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.faq-icon::before,
+.faq-icon::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 0;
+  width: 16px;
+  height: 1.6px;
+  background: currentColor;
+  translate: 0 -50%;
+  transition: rotate 0.25s ease;
+}
+
+.faq-icon::after {
+  rotate: 90deg;
+}
+
+.faq-item.open .faq-icon::after {
+  rotate: 0deg;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faq-answer p {
+  padding: 0 4px 22px;
+  max-width: 60ch;
+  color: var(--grey-text);
+}
+
+/* --------------------------------------------------------------------------
+   8. Closing band
+   -------------------------------------------------------------------------- */
+.closing-band {
+  padding: var(--sec-y-band) 0;
+  background:
+    radial-gradient(80% 120% at 50% -30%, rgba(254, 253, 250, 0.16), transparent 60%),
+    linear-gradient(180deg, #1a2340 0%, var(--navy) 100%);
+}
+
+.closing-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  text-align: center;
+}
+
+.closing-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+  color: var(--beige);
+}
+
+/* One continuous navy canvas for a dark section that flows straight
+   into the closing band — avoids visible gradient seams between them. */
+.dark-flow {
+  background:
+    radial-gradient(90% 70% at 50% 108%, rgba(254, 253, 250, 0.14), transparent 65%),
+    linear-gradient(180deg, var(--navy) 0%, #1a2340 55%, var(--navy) 100%);
+}
+
+.dark-flow .dark-section,
+.dark-flow .closing-band {
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   8b. Site search overlay
+   The overlay markup is injected by js/main.js; the trigger button
+   lives in the header on every page.
+   -------------------------------------------------------------------------- */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 120px 20px 40px;
+  background: rgba(15, 21, 42, 0.45);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
+}
+
+.search-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-panel {
+  width: min(640px, 100%);
+  overflow: hidden;
+  background: var(--beige);
+  border-radius: var(--radius-card);
+  box-shadow: 0 40px 80px -30px rgba(15, 21, 42, 0.6);
+  transform: translateY(-14px);
+  transition: transform 0.25s ease;
+}
+
+.search-overlay.is-open .search-panel {
+  transform: none;
+}
+
+.search-input-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--grey-line);
+}
+
+.search-input-row svg {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  color: var(--grey-faint);
+}
+
+/* The input carries no ring of its own (it has no border to hang one on);
+   the row it sits in shows the focus state instead. */
+.search-input-row:focus-within {
+  border-bottom-color: var(--navy);
+  box-shadow: 0 2px 0 0 var(--navy);
+}
+
+.search-input-row input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: 300 1.05rem var(--font-sans);
+  letter-spacing: 0.02em;
+  color: var(--navy);
+}
+
+.search-input-row input::placeholder {
+  /* The overlay has no visible label, so this placeholder is the only
+     prompt — it has to clear the contrast minimum like body text. */
+  color: var(--grey-faint);
+}
+
+.search-input-row kbd {
+  padding: 3px 8px;
+  border: 1px solid var(--grey-line);
+  border-radius: 7px;
+  font: 400 0.7rem var(--font-sans);
+  letter-spacing: 0.08em;
+  color: var(--grey-text);
+}
+
+.search-results {
+  max-height: min(52vh, 460px);
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.search-result {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 14px;
+  transition: background-color 0.15s ease;
+}
+
+.search-result:hover,
+.search-result.is-active {
+  background: var(--beige-dim);
+}
+
+.sr-path {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.sr-title {
+  margin-top: 2px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.06rem;
+  color: var(--navy);
+}
+
+.sr-snippet {
+  margin-top: 2px;
+  font-size: 0.86rem;
+  color: var(--grey-text);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.search-empty {
+  padding: 34px 20px;
+  text-align: center;
+  font-size: 0.94rem;
+  color: var(--grey-text);
+}
+
+/* --------------------------------------------------------------------------
+   8c. Intro animation (home page only)
+   Navy full-screen with the seal; the seal then shrinks into its spot
+   in the brand band while the backdrop dissolves. Driven by js/main.js.
+   -------------------------------------------------------------------------- */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+}
+
+.intro-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--navy);
+  transition: opacity 0.9s ease;
+}
+
+.intro-seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(300px, 52vw);
+  height: auto;
+  transform: translate(-50%, -50%) scale(0.92);
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: transform;
+}
+
+/* Phase 1 — the seal breathes in on the navy screen */
+.intro.is-ready .intro-seal {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Phase 2 — js/main.js sets a custom translate/scale target so the seal
+   glides exactly onto the brand-band seal, while the backdrop dissolves */
+.intro.is-landing .intro-seal {
+  transition: transform 1.1s cubic-bezier(0.55, 0, 0.2, 1);
+  transform: var(--intro-target);
+}
+
+.intro.is-landing .intro-bg {
+  opacity: 0;
+}
+
+.intro.is-done {
+  display: none;
+}
+
+body.intro-lock {
+  overflow: hidden;
+}
+
+/* While the intro seal is flying, the real band seal stays invisible —
+   the overlay seal IS the logo until it lands and the two swap places. */
+.band-seal.is-intro-hidden {
+  visibility: hidden;
+}
+
+/* Accessibility: no theatrics for users who opted out of motion */
+@media (prefers-reduced-motion: reduce) {
+  .intro {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8d. Language splash
+   Shown when switching between English and Ukrainian: the seal breathes
+   in over navy, the page reloads in the other language, the splash
+   dissolves. Driven by js/main.js + js/i18n.js.
+   -------------------------------------------------------------------------- */
+.lang-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 320;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--navy);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.lang-splash.is-on {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lang-splash img {
+  width: min(220px, 40vw);
+  height: auto;
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s;
+}
+
+.lang-splash.is-on img {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Language toggle shows the language you would switch TO */
+.nav-lang {
+  font: 500 0.78rem var(--font-sans);
+  letter-spacing: 0.12em;
+}
+
+/* --------------------------------------------------------------------------
+   9. Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+  background: var(--navy);
+  color: var(--white-text);
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  gap: clamp(40px, 6vw, 100px);
+  padding: 52px 0 40px;
+  border-bottom: 1px solid var(--white-line);
+}
+
+.footer-seal {
+  width: 92px;
+  height: auto;
+}
+
+.footer-tagline {
+  margin-top: 20px;
+  max-width: 34ch;
+  font-size: 0.94rem;
+}
+
+.footer-columns {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.footer-col h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.02rem;
+  color: var(--beige);
+}
+
+.footer-col ul {
+  list-style: none;
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.footer-col a {
+  font-size: 0.92rem;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+  color: var(--beige);
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 28px 0 36px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 12px;
+}
+
+/* Circular social buttons — YouTube / Instagram, real profile links. */
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  color: rgba(254, 253, 250, 0.72);
+  border: 1px solid var(--white-line);
+  border-radius: var(--radius-pill);
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.social-btn svg {
+  width: 19px;
+  height: 19px;
+}
+
+a.social-btn:hover {
+  color: var(--beige);
+  border-color: var(--beige);
+  background: rgba(254, 253, 250, 0.07);
+}
+
+/* Header social icons sit in the pill bar beside the search/lang controls. */
+.nav-social svg {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-copyright {
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+}
+
+/* --------------------------------------------------------------------------
+   10. Responsive breakpoints
+   -------------------------------------------------------------------------- */
+/* Squeezed bar (small laptops, browser zoom ~110–125%): tighten the
+   menu before anything can wrap or clip */
+@media (max-width: 1180px) {
+  .nav-link {
+    padding: 9px 11px;
+    letter-spacing: 0.03em;
+  }
+
+  .nav-menu {
+    gap: 0;
+  }
+}
+
+@media (max-width: 1080px) {
+  .brand-name {
+    display: none;
+  }
+}
+
+/* The menu CTA row only exists for the hamburger panel (built by
+   main.js) — the desktop pill bar has its own button */
+.nav-item-cta {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  /* Collapse the menu behind the hamburger */
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-sep {
+    display: block;
+  }
+
+  .nav-actions .btn-cta {
+    display: none;
+  }
+
+  /* The social icons would collide with the wordmark in the narrow bar —
+     they stay reachable in the footer on phones. */
+  .nav-social {
+    display: none;
+  }
+
+  /* Get Involved lives inside the hamburger panel on phones */
+  .nav-item-cta {
+    display: block;
+    margin-top: 10px;
+  }
+
+  .nav-item-cta .btn-cta {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Side-slide reveals shove content off the narrow viewport and leave
+     sections looking blank mid-scroll — on phones every reveal becomes
+     a short, quick fade-up instead */
+  .reveal,
+  .reveal-left,
+  .reveal-right {
+    transform: translateY(14px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: calc(var(--header-height) + 10px);
+    left: 0;
+    right: 0;
+    width: min(var(--container), calc(100% - 32px));
+    margin-inline: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    padding: 14px;
+    background: linear-gradient(150deg, rgba(26, 34, 62, 0.8), rgba(15, 21, 42, 0.72));
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(254, 253, 250, 0.16);
+    border-radius: 22px;
+    box-shadow: var(--shadow-soft);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  }
+
+  .nav-open .nav-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .nav-link {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Dropdowns become in-flow accordions on mobile */
+  .dropdown {
+    position: static;
+    translate: none;
+    min-width: 0;
+    border: 0;
+    box-shadow: none;
+    padding: 0 8px;
+    display: none;
+    transform: none;
+  }
+
+  .nav-item.open .dropdown {
+    display: block;
+  }
+
+  .brand-name {
+    display: inline;
+    font-size: 0.92rem;
+  }
+
+  /* The audience path cards live in this file, so their responsive
+     collapse belongs here too (index.html depends on it) */
+  .audience-row {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-inner,
+  .faq-inner,
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .feature:nth-child(even) .feature-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .feature:nth-child(even) .feature-card {
+    order: 0;
+  }
+
+  .faq-title {
+    position: static;
+  }
+
+  .footer-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-name {
+    display: none;
+  }
+
+  .feature-card {
+    padding: 26px 22px;
+  }
+}

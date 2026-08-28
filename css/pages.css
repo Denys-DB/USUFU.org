@@ -1,0 +1,7387 @@
+/* ==========================================================================
+   United States Universities For Ukraine — pages.css
+
+   Component library for the inner pages. Loaded AFTER styles.css,
+   which still owns the design tokens, header, footer and shared helpers.
+
+   Contents
+   1. Page hero & section headings
+   2. Bento grid (About / Programs highlights)
+   3. Dark link grid (support areas)
+   4. Team grid & timeline & partner strip (About)
+   5. Stats band
+   6. Contact layout & form
+   7. News: featured post, post grid, pagination
+   8. Guide cards (Resources)
+   9. Pathway cards (Get Involved)
+   10. Legal prose
+   11. Placeholder tints & shared bits
+   12. Responsive breakpoints
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Page hero & section headings
+   -------------------------------------------------------------------------- */
+/* One hero for every inner page. The guide pages used to run a second
+   variant (.guide-hero / .page-sub.guide-lead) with a different bottom
+   padding and a different sub size — the values that variant proved out
+   are now the only ones, so the hero reads the same on all 40 pages. */
+.page-hero {
+  position: relative;
+  padding: var(--hero-top) 0 var(--hero-bottom);
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Same soft navy wash the home hero uses */
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(90% 65% at 50% -18%, rgba(15, 21, 42, 0.3), transparent 68%),
+    radial-gradient(38% 42% at 12% 4%, rgba(35, 44, 78, 0.14), transparent 70%),
+    radial-gradient(38% 42% at 88% 4%, rgba(35, 44, 78, 0.14), transparent 70%);
+  pointer-events: none;
+}
+
+.page-hero .container {
+  position: relative;
+  max-width: 800px;
+}
+
+/* Breadcrumb trail above the title, e.g. Home · Programs */
+.breadcrumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 26px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.breadcrumb a {
+  transition: color 0.2s ease;
+}
+
+.breadcrumb a:hover {
+  color: var(--navy);
+}
+
+.breadcrumb .crumb-sep {
+  opacity: 0.5;
+}
+
+.page-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(2.1rem, 4.6vw, 3.3rem);
+  line-height: 1.14;
+  /* Playfair's fi/fl ligatures sit too tight at display sizes
+     ("The fine print") — keep the letters apart */
+  font-variant-ligatures: no-common-ligatures;
+  letter-spacing: 0;
+  /* Centred display type strands single words on the last line; balance
+     evens the lines instead. Ignored by browsers that don't support it. */
+  text-wrap: balance;
+}
+
+.page-sub {
+  max-width: 660px;
+  margin: 24px auto 0;
+  font-size: 1.08rem;
+  line-height: 1.66;
+  color: var(--grey-text);
+  /* balance, not pretty: these run two or three lines, and pretty only
+     rescues a single-word last line — it still left "or ACT." stranded. */
+  text-wrap: balance;
+}
+
+/* Reusable centered heading for any section */
+.section-head {
+  max-width: 640px;
+  margin: 0 auto var(--head-gap);
+  text-align: center;
+}
+
+.section-eyebrow {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.section-sub {
+  margin-top: 16px;
+  color: var(--grey-text);
+  text-wrap: balance;
+}
+
+/* A heading block that ends its section carries no trailing gap */
+.section-head:last-child {
+  margin-bottom: 0;
+}
+
+/* When a dark statement flows into the closing band on one canvas,
+   pull the two together instead of stacking both paddings */
+.dark-flow .dark-section {
+  padding-bottom: 8px;
+}
+
+.dark-flow .closing-band {
+  padding-top: 48px;
+}
+
+/* Dark sections recolor the same heading pieces */
+.dark-section .section-title { color: var(--beige); }
+.dark-section .section-eyebrow,
+.dark-section .section-sub { color: var(--white-text); }
+
+/* --------------------------------------------------------------------------
+   2. Bento grid
+   -------------------------------------------------------------------------- */
+.bento-section {
+  padding: var(--sec-y-lg) 0;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.bento-card {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 20px 44px -34px rgba(15, 21, 42, 0.4);
+}
+
+/* Preview image of the tool each card describes (screens from this site). */
+.bento-panel {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--navy);
+}
+
+.bento-panel img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bento-body {
+  padding: 28px 30px 32px;
+}
+
+.bento-body h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.35rem;
+}
+
+.bento-body p {
+  margin-top: 10px;
+  font-size: 0.96rem;
+  color: var(--grey-text);
+}
+
+/* --------------------------------------------------------------------------
+   3. Dark link grid (support areas)
+   -------------------------------------------------------------------------- */
+.dark-section {
+  padding: var(--sec-y) 0;
+  background:
+    radial-gradient(70% 90% at 50% 115%, rgba(254, 253, 250, 0.14), transparent 70%),
+    linear-gradient(175deg, var(--navy) 0%, #1a2340 55%, var(--navy) 100%);
+  color: var(--white-text);
+}
+
+.link-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 26px 26px 22px;
+  border: 1px solid var(--white-line);
+  border-radius: var(--radius-card);
+  background: rgba(254, 253, 250, 0.03);
+  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.link-card:hover {
+  background: rgba(254, 253, 250, 0.08);
+  border-color: rgba(254, 253, 250, 0.4);
+  transform: translateY(-3px);
+}
+
+.link-card h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--beige);
+}
+
+.link-card h3 svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.link-card:hover h3 svg {
+  transform: translateX(4px);
+}
+
+.link-card p {
+  font-size: 0.92rem;
+}
+
+/* --------------------------------------------------------------------------
+   4. Team grid, timeline & partner strip (About)
+   -------------------------------------------------------------------------- */
+.team-section,
+.story-section,
+.partner-section {
+  padding: var(--sec-y-lg) 0;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.team-card {
+  padding: 26px 22px 30px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+}
+
+/* Portrait placeholder — drop a real <img> in later */
+.portrait {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  border: 1px dashed rgba(15, 21, 42, 0.25);
+  background:
+    radial-gradient(70% 70% at 30% 25%, rgba(35, 44, 78, 0.14), transparent 75%),
+    var(--beige-dim);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-faint);
+}
+
+.team-card h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.14rem;
+}
+
+.team-card p {
+  margin-top: 4px;
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+/* Vertical story timeline */
+.timeline {
+  max-width: 620px;
+  margin: 0 auto;
+  border-left: 1px solid rgba(15, 21, 42, 0.2);
+}
+
+.timeline-item {
+  position: relative;
+  padding: 0 0 44px 36px;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: -5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--navy);
+}
+
+.timeline-year {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.timeline-item p {
+  margin-top: 6px;
+  color: var(--grey-text);
+  max-width: 52ch;
+}
+
+/* Partner logo placeholders */
+.partner-strip {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.partner-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 84px;
+  border: 1px dashed rgba(15, 21, 42, 0.22);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey-faint);
+}
+
+/* --------------------------------------------------------------------------
+   5. Stats band
+   -------------------------------------------------------------------------- */
+.stats-band {
+  padding: var(--sec-y-lg) 0;
+  background: var(--beige-dim);
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  text-align: center;
+}
+
+.stat-number {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 4.4vw, 3.2rem);
+  line-height: 1;
+}
+
+.stat-label {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+/* --------------------------------------------------------------------------
+   6. Contact layout & form
+   -------------------------------------------------------------------------- */
+.contact-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(30px, 5vw, 70px);
+  align-items: start;
+}
+
+.contact-cards {
+  display: grid;
+  gap: 14px;
+}
+
+.contact-card {
+  padding: 24px 26px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+}
+
+.contact-card h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.12rem;
+}
+
+.contact-card p {
+  margin-top: 6px;
+  font-size: 0.94rem;
+  color: var(--grey-text);
+}
+
+.contact-card a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact-form {
+  padding: 36px 34px 40px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 24px 50px -34px rgba(15, 21, 42, 0.45);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+/* A class selector beats the UA `[hidden]` rule, so `display:flex` would keep
+   a hidden field on screen. Re-assert the hide for the conditional subject. */
+.form-field[hidden] {
+  display: none;
+}
+
+.form-field label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  padding: 13px 16px;
+  /* 16px minimum — anything smaller makes iOS Safari zoom in on focus */
+  font: 300 1rem var(--font-sans);
+  letter-spacing: 0.02em;
+  color: var(--navy);
+  background: var(--beige);
+  border: 1px solid var(--grey-line);
+  border-radius: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* A visible keyboard focus indicator. The old rule was `outline: none` with
+   only a border tint to replace it — WCAG 2.4.7 needs more than a 1px
+   colour shift, and :focus-visible keeps it off mouse clicks. */
+.form-field input:focus-visible,
+.form-field select:focus-visible,
+.form-field textarea:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: var(--grey-faint);
+}
+
+/* Confirmation note shown by js/main.js after submitting the template form */
+/* The address, called out so it reads as the primary way to reach us
+   rather than one line of body copy inside a card. */
+.contact-mail a {
+  font-size: 1.06rem;
+  font-weight: 500;
+  color: var(--navy);
+  border-bottom: 1px solid var(--grey-line);
+  transition: border-color 0.2s ease;
+}
+
+.contact-mail a:hover {
+  border-bottom-color: var(--navy);
+}
+
+.contact-mail + p {
+  margin-top: 8px;
+}
+
+/* Sits under the submit button and explains what pressing it will do,
+   before it is pressed. */
+.form-hint {
+  margin-top: 14px;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--grey-faint);
+}
+
+.form-note {
+  display: none;
+  margin-top: 16px;
+  padding: 14px 18px;
+  border: 1px solid rgba(15, 21, 42, 0.2);
+  border-radius: 12px;
+  background: var(--beige-dim);
+  font-size: 0.92rem;
+  color: var(--navy);
+}
+
+.form-note.is-visible {
+  display: block;
+}
+
+/* Error variant — used by the spam check in js/main.js */
+.form-note.is-error {
+  border-color: rgba(140, 47, 47, 0.4);
+  color: #8c2f2f;
+}
+
+/* --------------------------------------------------------------------------
+   7. News: featured post, post grid, pagination
+   -------------------------------------------------------------------------- */
+.news-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+.news-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 34px;
+}
+
+.chip.is-active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+.post-featured {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  overflow: hidden;
+  margin-bottom: 30px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 24px 50px -34px rgba(15, 21, 42, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.post-featured:hover {
+  transform: translateY(-3px);
+}
+
+.post-featured .post-thumb {
+  aspect-ratio: auto;
+  min-height: 300px;
+}
+
+.post-featured-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px 42px;
+}
+
+.post-featured-body h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.22;
+}
+
+.post-featured-body p {
+  color: var(--grey-text);
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 44px -30px rgba(15, 21, 42, 0.45);
+}
+
+.post-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+}
+
+.post-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(254, 253, 250, 0.92);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.post-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 22px 24px 26px;
+}
+
+.post-body h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.18rem;
+  line-height: 1.3;
+}
+
+.post-meta {
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 36px;
+}
+
+.page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-pill);
+  font-size: 0.88rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--grey-text);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.page-btn:hover,
+.page-btn.is-active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+.page-btn:disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   8. Guide cards (Resources)
+   -------------------------------------------------------------------------- */
+.guides-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y-lg);
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.guide-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 30px 28px;
+  background: var(--beige-dim);
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.guide-card:hover {
+  transform: translateY(-4px);
+  background: #ffffff;
+}
+
+.guide-index {
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.guide-card h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.28;
+}
+
+.guide-card p {
+  font-size: 0.94rem;
+  color: var(--grey-text);
+}
+
+.guide-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 10px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.guide-link svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.25s ease;
+}
+
+.guide-card:hover .guide-link svg {
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   9. Pathway cards (Get Involved)
+   -------------------------------------------------------------------------- */
+.pathway-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+.pathway-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.pathway-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 36px 32px 38px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 20px 44px -34px rgba(15, 21, 42, 0.4);
+}
+
+.pathway-glyph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 6px;
+  border-radius: 16px;
+  background: var(--navy);
+  color: var(--beige);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.pathway-card h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.pathway-card p {
+  color: var(--grey-text);
+}
+
+.pathway-card .btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* --------------------------------------------------------------------------
+   9b. Our Help — full-width support rows on the dark canvas
+   -------------------------------------------------------------------------- */
+.help-section {
+  padding: var(--sec-y) 0;
+}
+
+.help-stack {
+  display: grid;
+  gap: 22px;
+}
+
+.help-row {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  align-items: center;
+  gap: clamp(26px, 4vw, 60px);
+  padding: clamp(30px, 4vw, 52px);
+  border: 1px solid var(--white-line);
+  border-radius: var(--radius-card);
+  background: rgba(254, 253, 250, 0.04);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.help-row:hover {
+  background: rgba(254, 253, 250, 0.07);
+  border-color: rgba(254, 253, 250, 0.32);
+}
+
+/* Alternate the image side row by row. The tracks are swapped as well as
+   the order, so the artwork keeps ONE width down the whole column instead
+   of jumping between the 6fr and 5fr track every other row. */
+.help-row:nth-child(even) {
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+}
+
+.help-row:nth-child(even) .help-media {
+  order: -1;
+}
+
+.help-index {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--white-text);
+}
+
+.help-row h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  color: var(--beige);
+}
+
+.help-row p {
+  margin: 14px 0 26px;
+  color: var(--white-text);
+}
+
+/* Image placeholder on the dark canvas */
+.help-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  border: 1px dashed rgba(254, 253, 250, 0.3);
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(70% 80% at 30% 20%, rgba(254, 253, 250, 0.07), transparent 70%),
+    rgba(254, 253, 250, 0.02);
+}
+
+.help-media span {
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(254, 253, 250, 0.45);
+}
+
+/* Same photo fill as .media-frame--photo on the home page, so the two sets
+   of 16:9 artwork render identically on their light and dark canvases. */
+.help-media--photo {
+  display: block;
+  aspect-ratio: 16 / 9;
+  border: none;
+  overflow: hidden;
+  background: var(--navy);
+}
+
+.help-media--photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   9c. Contact strip — the short "questions?" invitation on detail pages
+   -------------------------------------------------------------------------- */
+.cta-strip {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+.cta-strip-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  padding: clamp(40px, 6vw, 64px);
+  text-align: center;
+  background: var(--beige-dim);
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+}
+
+.cta-strip h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+}
+
+.cta-strip p {
+  max-width: 46ch;
+  margin-top: -8px;
+  color: var(--grey-text);
+}
+
+/* --------------------------------------------------------------------------
+   9d. Service slot — reserved space for a third-party embed (donations)
+   -------------------------------------------------------------------------- */
+.service-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 320px;
+  margin: 30px 0;
+  border: 1px dashed rgba(15, 21, 42, 0.3);
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+
+.service-slot strong {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--navy);
+}
+
+.service-slot span {
+  font-size: 0.84rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-faint);
+}
+
+/* --------------------------------------------------------------------------
+   9e. Give-direct panel — donate.html, while there is no payment embed.
+   Same white card as .contact-card, with the sand rule that marks a
+   "notice" surface everywhere else on the site.
+   -------------------------------------------------------------------------- */
+.give-direct {
+  margin: 40px 0 8px;
+  padding: 26px 30px 28px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-left: 3px solid #b9a97f;
+  border-radius: var(--radius-card);
+}
+
+.give-direct h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.24rem;
+  color: var(--navy);
+}
+
+.give-direct p {
+  margin-top: 10px;
+  font-size: 0.96rem;
+  line-height: 1.7;
+  color: var(--grey-text);
+}
+
+.give-direct .give-direct-addr {
+  margin-top: 8px;
+  font-size: 1.14rem;
+  font-weight: 500;
+}
+
+.give-direct .give-direct-addr a {
+  color: var(--navy);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.give-direct .give-direct-note {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--grey-line);
+  font-size: 0.86rem;
+  color: var(--grey-faint);
+}
+
+@media (max-width: 700px) {
+  .give-direct { padding-left: 20px; padding-right: 20px; }
+}
+
+/* --------------------------------------------------------------------------
+   9e. Useful hub — four doorway cards (Materials / Videos / Timelines / Dates)
+   -------------------------------------------------------------------------- */
+.hub-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* Category headings that break the hub into themed groups (v20.1) */
+.hub-group {
+  margin: 36px 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--grey-line);
+}
+
+.hub-group:first-child {
+  margin-top: 0;
+}
+
+.hub-group-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.45rem;
+  color: var(--navy);
+}
+
+.hub-group-sub {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: var(--grey-text);
+  max-width: 70ch;
+}
+
+.hub-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 32px 32px 28px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 20px 44px -34px rgba(15, 21, 42, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hub-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 50px -30px rgba(15, 21, 42, 0.5);
+}
+
+.hub-glyph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 8px;
+  border-radius: 16px;
+  background: var(--navy);
+  color: var(--beige);
+}
+
+.hub-glyph svg {
+  width: 24px;
+  height: 24px;
+}
+
+.hub-card h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.hub-card p {
+  color: var(--grey-text);
+}
+
+.hub-card .link-arrow {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   9f. Materials — download cards
+   -------------------------------------------------------------------------- */
+.downloads-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+.dl-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.dl-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 28px 24px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dl-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 44px -30px rgba(15, 21, 42, 0.45);
+}
+
+/* Small picture tile next to the label row — swap the tint for an
+   <img> later, same footprint */
+.dl-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+
+.dl-thumb {
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  border-radius: 14px;
+}
+/* An <img> thumb, for the one card that has a real picture rather than a tint.
+   The base img rule already sets height:auto, so the height is restated here —
+   a square is the whole point of the slot. */
+.dl-thumb--icon {
+  height: 54px;
+  object-fit: cover;
+}
+
+.dl-kind {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.dl-card h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.22rem;
+  line-height: 1.3;
+}
+
+.dl-card > p {
+  font-size: 0.94rem;
+  color: var(--grey-text);
+}
+
+.dl-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.dl-meta {
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+/* Round download button with the tray arrow */
+.dl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background: var(--navy);
+  color: var(--beige);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.dl-btn:hover {
+  background: var(--navy-soft);
+}
+
+.dl-btn:active {
+  transform: scale(0.94);
+}
+
+.dl-btn svg {
+  width: 19px;
+  height: 19px;
+}
+
+/* Cards whose file isn't uploaded yet */
+.dl-card.is-soon {
+  border-style: dashed;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.dl-card.is-soon .dl-btn {
+  background: rgba(15, 21, 42, 0.1);
+  color: var(--grey-faint);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   9g. Video library
+   -------------------------------------------------------------------------- */
+.video-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+/* Featured video: player slot + chapter rail */
+.video-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  overflow: hidden;
+  margin-bottom: 30px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 24px 50px -34px rgba(15, 21, 42, 0.4);
+}
+
+/* Reserved space for the real embed (YouTube/Vimeo iframe) later */
+.video-player {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+}
+
+.play-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: rgba(254, 253, 250, 0.92);
+  color: var(--navy);
+  box-shadow: 0 18px 40px -14px rgba(15, 21, 42, 0.6);
+  transition: transform 0.2s ease;
+}
+
+.video-player:hover .play-badge,
+.video-card:hover .play-badge {
+  transform: scale(1.08);
+}
+
+.play-badge svg {
+  width: 26px;
+  height: 26px;
+  margin-left: 4px;
+}
+
+.video-chapters {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 26px;
+  border-left: 1px solid var(--grey-line);
+}
+
+.video-chapters h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.video-chapters > p {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: var(--grey-text);
+}
+
+/* Honest "videos coming" empty state (see videos.html). */
+.video-chapters .video-soon-note {
+  margin-top: 14px;
+  line-height: 1.6;
+}
+.video-chapters .video-soon-cta {
+  margin-top: 22px;
+  align-self: flex-start;
+}
+
+.chapter-list {
+  list-style: none;
+  margin-top: 18px;
+  display: grid;
+  gap: 4px;
+  overflow-y: auto;
+}
+
+.chapter-list a {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  transition: background-color 0.15s ease;
+}
+
+.chapter-list a:hover {
+  background: var(--beige-dim);
+}
+
+.chapter-time {
+  flex-shrink: 0;
+  min-width: 46px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.chapter-name {
+  font-size: 0.92rem;
+  color: var(--grey-text);
+}
+
+/* Grid of upcoming videos */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.video-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 44px -30px rgba(15, 21, 42, 0.45);
+}
+
+.video-thumb {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+}
+
+.video-thumb .play-badge {
+  width: 54px;
+  height: 54px;
+}
+
+.video-thumb .play-badge svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 3px;
+}
+
+.video-length {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(15, 21, 42, 0.82);
+  color: var(--beige);
+  font-size: 0.74rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.video-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 24px 24px;
+}
+
+.video-body h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.16rem;
+  line-height: 1.3;
+}
+
+.video-stamps {
+  list-style: none;
+  display: grid;
+  gap: 3px;
+}
+
+.video-stamps li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 0.86rem;
+  color: var(--grey-text);
+}
+
+.video-stamps .chapter-time {
+  font-size: 0.76rem;
+}
+
+/* --------------------------------------------------------------------------
+   9h. Timelines — perpetual countdown + deadline list
+   -------------------------------------------------------------------------- */
+.countdown-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+/* Deliberately NOT on --tool-col: this is a full-bleed banner and it sits
+   directly above the equally full-bleed .hstrip, so capping it to the tool
+   column would inset it against its own neighbour. */
+.countdown-card {
+  padding: clamp(32px, 5vw, 52px) 30px;
+  text-align: center;
+  background:
+    radial-gradient(80% 100% at 50% 115%, rgba(254, 253, 250, 0.16), transparent 70%),
+    linear-gradient(170deg, var(--navy) 0%, #1a2340 60%, var(--navy) 100%);
+  border-radius: var(--radius-card);
+  color: var(--beige);
+}
+
+.countdown-label {
+  font-size: 0.84rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--white-text);
+}
+
+.countdown-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(18px, 4vw, 44px);
+  margin-top: 26px;
+}
+
+.count-cell {
+  min-width: 76px;
+}
+
+.count-num {
+  font-family: "USUFU Count", var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 7vw, 4.6rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.count-unit {
+  margin-top: 8px;
+  font-size: 0.76rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--white-text);
+}
+
+.count-sep {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  line-height: 1.3;
+  color: rgba(254, 253, 250, 0.35);
+}
+
+.countdown-date {
+  margin-top: 26px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--white-text);
+}
+
+/* Deadline rows */
+.deadline-section {
+  padding: 0 0 var(--sec-y);
+}
+
+.deadline-list {
+  display: grid;
+  gap: 14px;
+}
+
+.deadline-row {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: clamp(18px, 3vw, 36px);
+  align-items: center;
+  padding: 24px 28px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+}
+
+.deadline-when {
+  padding: 10px 8px;
+  text-align: center;
+  border-right: 1px solid var(--grey-line);
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  color: var(--navy);
+}
+
+.deadline-what h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.18rem;
+}
+
+.deadline-what p {
+  margin-top: 4px;
+  font-size: 0.92rem;
+  color: var(--grey-text);
+}
+
+/* --------------------------------------------------------------------------
+   9i. Dates — blocks that lead to the official calendars
+   -------------------------------------------------------------------------- */
+.dates-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.date-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 34px 32px 30px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.date-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 44px -30px rgba(15, 21, 42, 0.45);
+}
+
+.date-kind {
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.date-card h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.date-card p {
+  color: var(--grey-text);
+  font-size: 0.95rem;
+}
+
+.date-card .link-arrow {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+/* Small footnote under the grid */
+.date-note {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--grey-text);
+}
+
+/* --------------------------------------------------------------------------
+   9j. Tip of the day (Useful hub)
+   A quiet, slim band under the hero — visible but never loud.
+   -------------------------------------------------------------------------- */
+.tip-board {
+  padding: 0 0 40px;
+}
+
+.tip-card {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 18px 26px;
+  background: rgba(15, 21, 42, 0.05);
+  border: 1px solid rgba(15, 21, 42, 0.1);
+  border-radius: 18px;
+}
+
+.tip-label {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.tip-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.98rem;
+  color: var(--navy);
+}
+
+.tip-index {
+  flex-shrink: 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  color: var(--grey-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   9k. Calculators
+   -------------------------------------------------------------------------- */
+.calc-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+.calc-card {
+  max-width: var(--tool-col);
+  margin: 0 auto;
+  padding: clamp(28px, 4vw, 48px);
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 24px 50px -34px rgba(15, 21, 42, 0.4);
+}
+
+.calc-intro {
+  margin: -6px 0 26px;
+  font-size: 0.95rem;
+  color: var(--grey-text);
+}
+
+.calc-inputs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* Result line + meter for the final-exam calculator */
+.calc-verdict {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.calc-number {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-message {
+  margin-top: 6px;
+  font-size: 0.96rem;
+  color: var(--grey-text);
+}
+
+.calc-number.is-impossible {
+  color: #8c2f2f;
+}
+
+/* Horizontal meter: red -> green with a pin at the needed score */
+.meter {
+  position: relative;
+  height: 10px;
+  margin: 26px 8px 8px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, #2f7d4f 0%, #b9a23a 55%, #b0552f 82%, #8c2f2f 100%);
+}
+
+.meter-pin {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 3px solid var(--beige);
+  background: var(--navy);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 12px rgba(15, 21, 42, 0.35);
+  transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.meter-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--grey-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- GPA calculator --- */
+.gpa-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.gpa-controls .form-field {
+  flex: 1;
+  min-width: 180px;
+  margin-bottom: 0;
+}
+
+/* Single year / four years switch (same look as the old auth tabs) */
+.mode-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 5px;
+  background: var(--beige-dim);
+  border-radius: var(--radius-pill);
+}
+
+.mode-tab {
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.mode-tab.is-active {
+  background: var(--navy);
+  color: var(--beige);
+}
+
+/* Year pills (four-year mode) */
+.year-tabs[hidden] {
+  display: none;
+}
+
+.year-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.year-tab {
+  padding: 8px 18px;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--grey-text);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.year-tab.is-active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+.gpa-rows {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.gpa-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 104px 172px 86px 38px;
+  gap: 10px;
+  align-items: center;
+}
+
+/* School-specific weighting controls (Honors/AP bonuses are editable) */
+.weight-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 16px 18px;
+  margin-bottom: 22px;
+  border: 1px solid var(--grey-line);
+  border-radius: 16px;
+  background: var(--beige-dim);
+}
+
+.weight-fields .form-field {
+  flex: 1;
+  min-width: 150px;
+  margin-bottom: 0;
+}
+
+.weight-note {
+  flex-basis: 100%;
+  font-size: 0.82rem;
+  color: var(--grey-text);
+}
+
+/* Weighted + unweighted shown side by side under the gauge */
+/* The dial's own end labels sit directly above these, in the same size
+   and tracking — 14px left the two rows reading as one stuttering label,
+   so the readout gets clear air beneath the dial. */
+.gauge-duo {
+  display: flex;
+  justify-content: center;
+  gap: clamp(30px, 6vw, 70px);
+  margin-top: 30px;
+}
+
+.gauge-duo .gauge-readout {
+  margin-top: 0;
+}
+
+.gauge-tag {
+  margin-bottom: 2px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.gpa-row input,
+.gpa-row select {
+  padding: 11px 14px;
+  font: 300 1rem var(--font-sans);
+  color: var(--navy);
+  background: var(--beige);
+  border: 1px solid var(--grey-line);
+  border-radius: 12px;
+  transition: border-color 0.2s ease;
+  min-width: 0;
+}
+
+.gpa-row input:focus-visible,
+.gpa-row select:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+
+.gpa-row input:focus,
+.gpa-row select:focus {
+  border-color: var(--grey-faint);
+}
+
+.gpa-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-pill);
+  color: var(--grey-text);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.gpa-remove:hover {
+  background: rgba(140, 47, 47, 0.1);
+  color: #8c2f2f;
+}
+
+.gpa-remove svg {
+  width: 15px;
+  height: 15px;
+}
+
+.gpa-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px dashed rgba(15, 21, 42, 0.3);
+  border-radius: var(--radius-pill);
+  font-size: 0.84rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.gpa-add:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+/* --- GPA gauge: smooth half-circle, green (A+) on the right --- */
+.gauge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 34px;
+}
+
+.gauge {
+  width: min(360px, 90%);
+  height: auto;
+  overflow: visible;
+}
+
+.gauge-needle {
+  transition: transform 0.7s cubic-bezier(0.34, 1.3, 0.5, 1);
+  transform-origin: 160px 150px;
+}
+
+.gauge-readout {
+  margin-top: 14px;
+  text-align: center;
+}
+
+.gauge-value {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+
+.gauge-letter {
+  margin-top: 2px;
+  font-size: 0.86rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.gauge-ends {
+  position: relative;
+  width: min(360px, 90%);
+  height: 1.1em;
+  margin-top: 2px;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+/* The dial's arc ends sit at 14.8% and 85.2% of its width — each
+   label is centered exactly under its own end of the arc */
+.gauge-ends span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.gauge-end-low { left: 14.8%; }
+.gauge-end-high { left: 85.2%; }
+
+/* --------------------------------------------------------------------------
+   9l. Career pathfinder quiz
+   -------------------------------------------------------------------------- */
+.quiz-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+.quiz-shell {
+  max-width: var(--tool-col);
+  margin: 0 auto;
+}
+
+.quiz-card {
+  padding: clamp(30px, 4.5vw, 52px);
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 24px 50px -34px rgba(15, 21, 42, 0.4);
+}
+
+.quiz-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 26px;
+}
+
+.quiz-dot {
+  width: 34px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--grey-line);
+  transition: background-color 0.3s ease;
+}
+
+.quiz-dot.is-done {
+  background: var(--navy);
+}
+
+.quiz-step {
+  margin-left: auto;
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.quiz-question {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.25;
+  margin-bottom: 26px;
+}
+
+.quiz-options {
+  display: grid;
+  gap: 12px;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 22px;
+  text-align: left;
+  border: 1px solid var(--grey-line);
+  border-radius: 16px;
+  background: var(--beige);
+  font-size: 1rem;
+  transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+
+.quiz-option:hover {
+  border-color: var(--grey-faint);
+  background: #ffffff;
+  transform: translateX(4px);
+}
+
+.quiz-option svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--grey-text);
+}
+
+.quiz-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  transition: color 0.2s ease;
+}
+
+.quiz-back:hover {
+  color: var(--navy);
+}
+
+.quiz-back svg {
+  width: 15px;
+  height: 15px;
+  transform: rotate(180deg);
+}
+
+/* Result screen */
+.quiz-eyebrow {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.quiz-result-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  line-height: 1.2;
+}
+
+.quiz-result-blurb {
+  margin: 14px 0 26px;
+  color: var(--grey-text);
+}
+
+.quiz-lists {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 24px;
+}
+
+.quiz-list h3 {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  margin-bottom: 10px;
+}
+
+.quiz-list ul {
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.quiz-list li {
+  padding-left: 16px;
+  position: relative;
+  font-size: 0.96rem;
+}
+
+.quiz-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--navy);
+}
+
+.quiz-track {
+  padding: 16px 20px;
+  border: 1px solid var(--grey-line);
+  border-radius: 14px;
+  background: var(--beige-dim);
+  font-size: 0.94rem;
+  color: var(--grey-text);
+  margin-bottom: 26px;
+}
+
+.quiz-track strong {
+  color: var(--navy);
+  font-weight: 500;
+}
+
+.quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   9m. Horizontal swipe timeline (timelines.html)
+   Eight school years on one swipeable line; the line fills up to the
+   active stop as you swipe (js/tools.js).
+   -------------------------------------------------------------------------- */
+.hstrip-section {
+  padding: 0 0 var(--sec-y);
+}
+
+.hstrip-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 8px;
+}
+
+.hstrip-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.hstrip-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-pill);
+  color: var(--navy);
+  background: #ffffff;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.hstrip-arrow:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+.hstrip-arrow:disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.hstrip-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.hstrip-arrow--prev svg {
+  transform: rotate(180deg);
+}
+
+/* The scroller itself */
+.hstrip {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 18px 0 10px;
+}
+
+.hstrip::-webkit-scrollbar {
+  display: none;
+}
+
+.hstrip-track {
+  position: relative;
+  display: flex;
+  gap: 22px;
+  width: max-content;
+  padding: 0 4px;
+}
+
+/* The line running through every dot, plus its animated fill */
+.hstrip-track::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(15, 21, 42, 0.14);
+}
+
+.hstrip-fill {
+  position: absolute;
+  top: 7px;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--navy);
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hstrip-stop {
+  position: relative;
+  flex: 0 0 min(280px, 74vw);
+  scroll-snap-align: center;
+}
+
+.hstrip-dot {
+  position: relative;
+  z-index: 1;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--beige);
+  border: 3px solid var(--navy);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.hstrip-stop.is-active .hstrip-dot {
+  background: var(--navy);
+  transform: scale(1.2);
+}
+
+.hstrip-year {
+  margin-top: 16px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.16rem;
+}
+
+.hstrip-stage {
+  margin-top: 1px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.hstrip-note {
+  margin-top: 10px;
+  padding: 16px 18px;
+  min-height: 118px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: 16px;
+  font-size: 0.92rem;
+  color: var(--grey-text);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hstrip-stop.is-active .hstrip-note {
+  border-color: rgba(15, 21, 42, 0.35);
+  box-shadow: 0 18px 36px -26px rgba(15, 21, 42, 0.45);
+}
+
+.hstrip-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+/* --------------------------------------------------------------------------
+   9n. Spine timelines (leveled timeline pages)
+   A center line per year; season cards slide in from the sides and
+   the line draws itself as you scroll (js/tools.js).
+   -------------------------------------------------------------------------- */
+.spine-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+.spine-year {
+  max-width: 640px;
+  margin: 40px auto 26px;
+  text-align: center;
+}
+
+.spine-year:first-child {
+  margin-top: 0;
+}
+
+.spine {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 6px 0 2px;
+}
+
+.spine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: rgba(15, 21, 42, 0.12);
+}
+
+.spine-fill {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 0;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, var(--navy-soft), var(--navy));
+}
+
+.spine-item {
+  position: relative;
+  width: calc(50% - 46px);
+  padding: 20px 24px 22px;
+  margin-bottom: 24px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: 18px;
+  box-shadow: 0 16px 36px -30px rgba(15, 21, 42, 0.4);
+}
+
+.spine-item:last-child {
+  margin-bottom: 0;
+}
+
+.spine-item--left {
+  margin-right: auto;
+}
+
+.spine-item--right {
+  margin-left: auto;
+}
+
+/* Dot on the spine + connector stub to the card */
+.spine-item::before {
+  content: "";
+  position: absolute;
+  top: 26px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--beige);
+  border: 3px solid var(--navy);
+  z-index: 1;
+}
+
+.spine-item--left::before { right: -52px; }
+.spine-item--right::before { left: -52px; }
+
+.spine-item::after {
+  content: "";
+  position: absolute;
+  top: 31px;
+  width: 40px;
+  height: 2px;
+  background: rgba(15, 21, 42, 0.14);
+}
+
+.spine-item--left::after { right: -40px; }
+.spine-item--right::after { left: -40px; }
+
+.spine-season {
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(15, 21, 42, 0.06);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.spine-item h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.12rem;
+  line-height: 1.3;
+}
+
+.spine-item p {
+  margin-top: 6px;
+  font-size: 0.92rem;
+  color: var(--grey-text);
+}
+
+/* --------------------------------------------------------------------------
+   9o. Slogan ribbon (leveled timelines hub)
+   -------------------------------------------------------------------------- */
+.slogan-band {
+  padding: 16px 0;
+  border-top: 1px solid var(--grey-line);
+  border-bottom: 1px solid var(--grey-line);
+  background: linear-gradient(90deg, transparent 0%, rgba(15, 21, 42, 0.05) 50%, transparent 100%);
+  text-align: center;
+}
+
+.slogan-band p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.14rem;
+  color: var(--navy);
+}
+
+/* --------------------------------------------------------------------------
+   9p. Get involved — reading layout
+   Sticky essay on the left; the three pathway blocks (each with an
+   image slot) glide by on the right as the reader scrolls.
+   -------------------------------------------------------------------------- */
+.involve-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+.involve-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(30px, 5vw, 72px);
+  align-items: start;
+}
+
+.involve-copy {
+  position: sticky;
+  top: 120px;
+}
+
+.involve-copy h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.22;
+}
+
+.involve-copy p {
+  margin-top: 16px;
+  color: var(--grey-text);
+}
+
+.involve-cards {
+  display: grid;
+  gap: 26px;
+}
+
+/* Image slot under each pathway block: full width, half the height */
+.pathway-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 168px;
+  margin-top: 12px;
+  border: 1px dashed rgba(15, 21, 42, 0.25);
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(65% 80% at 30% 20%, rgba(35, 44, 78, 0.1), transparent 70%),
+    radial-gradient(65% 80% at 75% 85%, rgba(15, 21, 42, 0.08), transparent 70%);
+}
+
+.pathway-media span {
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey-faint);
+}
+
+/* Photo fill for the slot above. The box keeps its fixed 168px height, so
+   its ratio runs from ~3.6:1 on desktop down to ~2:1 on a phone; the
+   artwork is composed at 2.6:1 with the object inside the middle 70% x 75%,
+   which means `cover` only ever crops empty navy. */
+.pathway-media--photo {
+  display: block;
+  overflow: hidden;
+  border: none;
+  background: var(--navy);
+}
+
+.pathway-media--photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   9q. Level strips (leveled-timelines hub)
+   Wide banner cards with a ghost grade-range numeral and a navy wash
+   that slides in on hover — same language as the audience cards.
+   -------------------------------------------------------------------------- */
+.level-strip {
+  display: grid;
+  gap: 18px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.level-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 30px 32px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-left: 3px solid var(--navy);
+  border-radius: var(--radius-card);
+  box-shadow: 0 20px 44px -34px rgba(15, 21, 42, 0.45);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.level-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, #232c4e -30%, var(--navy) 75%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.level-card > * {
+  position: relative;
+}
+
+.level-ghost {
+  position: absolute;
+  right: 96px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 5.4rem;
+  line-height: 1;
+  color: rgba(15, 21, 42, 0.06);
+  pointer-events: none;
+  transition: color 0.35s ease;
+}
+
+.level-eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  transition: color 0.35s ease;
+}
+
+.level-card h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  color: var(--navy);
+  transition: color 0.35s ease;
+}
+
+.level-card p {
+  margin-top: 8px;
+  max-width: 52ch;
+  color: var(--grey-text);
+  transition: color 0.35s ease;
+}
+
+.level-go {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-pill);
+  color: var(--navy);
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, transform 0.3s ease;
+}
+
+.level-go svg {
+  width: 20px;
+  height: 20px;
+}
+
+.level-card:hover {
+  transform: translateX(6px);
+  box-shadow: 0 28px 54px -28px rgba(15, 21, 42, 0.55);
+}
+
+.level-card:hover::before { opacity: 1; }
+.level-card:hover .level-ghost { color: rgba(254, 253, 250, 0.12); }
+.level-card:hover .level-eyebrow,
+.level-card:hover p { color: var(--white-text); }
+.level-card:hover h2 { color: var(--beige); }
+
+.level-card:hover .level-go {
+  background: var(--beige);
+  border-color: var(--beige);
+  color: var(--navy);
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   9r. Curved spine (About — the story of USUFU)
+   Same scroll-drawn idea as the level timelines, but the line is a
+   winding SVG path, so this page reads as its own moment.
+   -------------------------------------------------------------------------- */
+.spine--curved::before {
+  display: none;
+}
+
+.spine--curved .spine-item::before,
+.spine--curved .spine-item::after {
+  display: none;
+}
+
+.curve-svg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 90px;
+  height: 100%;
+  transform: translateX(-50%);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.curve-track,
+.curve-fill {
+  fill: none;
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+}
+
+.curve-track {
+  stroke: rgba(15, 21, 42, 0.12);
+}
+
+.curve-fill {
+  stroke: var(--navy);
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.spine--curved .spine-item {
+  margin-bottom: 34px;
+}
+
+/* --------------------------------------------------------------------------
+   10. Legal prose
+   -------------------------------------------------------------------------- */
+.legal-section {
+  padding: var(--sec-y-sm) 0 var(--sec-y);
+}
+
+.prose {
+  max-width: 70ch;
+  margin: 0 auto;
+}
+
+.prose h2 {
+  margin: var(--rule-gap) 0 16px;
+  padding-top: var(--rule-pad);
+  border-top: 1px solid var(--grey-line);
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.prose h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.prose h3 {
+  margin: 30px 0 10px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.13rem;
+  color: var(--navy);
+}
+
+.prose p {
+  margin-bottom: 14px;
+  color: var(--grey-text);
+}
+
+.prose p.legal-updated {
+  margin-top: -6px;
+  font-size: 0.9rem;
+  color: var(--grey-text);
+  opacity: 0.75;
+}
+
+/* --------------------------------------------------------------------------
+   11. Placeholder tints & shared bits
+   -------------------------------------------------------------------------- */
+/* Gradient placeholders used by bento panels and post thumbnails.
+   All stay inside the navy/beige palette; replace with photos later. */
+.tint-a {
+  background:
+    radial-gradient(80% 100% at 20% 0%, rgba(35, 44, 78, 0.5), transparent 70%),
+    linear-gradient(150deg, #232c4e 0%, #0f152a 90%);
+}
+
+.tint-b {
+  background:
+    radial-gradient(80% 100% at 80% 10%, rgba(254, 253, 250, 0.28), transparent 65%),
+    linear-gradient(200deg, #39456f 0%, #171f3d 85%);
+}
+
+.tint-c {
+  background:
+    radial-gradient(90% 90% at 50% 110%, rgba(35, 44, 78, 0.35), transparent 70%),
+    linear-gradient(160deg, #f4f1e9 0%, #d5d4cf 100%);
+}
+
+.tint-d {
+  background:
+    radial-gradient(70% 90% at 15% 90%, rgba(254, 253, 250, 0.18), transparent 60%),
+    linear-gradient(120deg, #0f152a 0%, #2a3454 100%);
+}
+
+/* Small "back to all" style link with arrow */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.link-arrow svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* --------------------------------------------------------------------------
+   12. Responsive breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 960px) {
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dl-grid,
+  .video-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .partner-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .post-grid,
+  .link-grid,
+  .guide-grid,
+  .pathway-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .bento-grid,
+  .contact-layout,
+  .post-featured,
+  .help-row,
+  .hub-grid,
+  .date-grid,
+  .video-feature {
+    grid-template-columns: 1fr;
+  }
+
+  .help-row:nth-child(even) {
+    grid-template-columns: 1fr;
+  }
+
+  .help-row:nth-child(even) .help-media {
+    order: 0;
+  }
+
+  .involve-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .involve-copy {
+    position: static;
+  }
+
+  /* Spine timelines collapse to a left rail on phones */
+  .spine::before,
+  .spine-fill {
+    left: 9px;
+    transform: none;
+  }
+
+  .spine-item,
+  .spine-item--left,
+  .spine-item--right {
+    width: auto;
+    margin-left: 38px;
+    margin-right: 0;
+  }
+
+  .spine-item--left::before,
+  .spine-item--right::before {
+    left: -35px;
+    right: auto;
+  }
+
+  .spine-item--left::after,
+  .spine-item--right::after {
+    left: -26px;
+    right: auto;
+    width: 24px;
+  }
+
+  /* The About story's winding curve was drawn for alternating desktop
+     cards — behind a single phone column it wanders off to the right.
+     On phones it becomes the same straight left rail as the leveled
+     timelines, dots and connector stubs included. */
+  .spine--curved .curve-svg {
+    display: none;
+  }
+
+  .spine--curved::before {
+    display: block;
+  }
+
+  .spine--curved .spine-item::before,
+  .spine--curved .spine-item::after {
+    display: block;
+  }
+
+  .video-chapters {
+    border-left: 0;
+    border-top: 1px solid var(--grey-line);
+  }
+
+  .deadline-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .deadline-when {
+    border-right: 0;
+    border-bottom: 1px solid var(--grey-line);
+    padding: 0 0 12px;
+    text-align: left;
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .post-grid,
+  .link-grid,
+  .guide-grid,
+  .pathway-grid,
+  .dl-grid,
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Phones: the countdown wraps instead of clipping */
+  .countdown-row {
+    flex-wrap: wrap;
+    gap: 22px;
+  }
+
+  .count-sep {
+    display: none;
+  }
+
+  .count-cell {
+    min-width: 64px;
+  }
+
+  .cta-strip-inner {
+    padding: 32px 22px;
+  }
+
+  /* Calculators & quiz on phones */
+  .calc-inputs,
+  .quiz-lists {
+    grid-template-columns: 1fr;
+  }
+
+  /* Grade stays narrow so the course-type select gets the room it
+     needs — "AP / IB / DE" must never truncate */
+  .gpa-row {
+    grid-template-columns: 62px minmax(0, 1fr) 54px 32px;
+    gap: 8px;
+  }
+
+  .gpa-row .gpa-name {
+    grid-column: 1 / -1;
+  }
+
+  .gpa-row input,
+  .gpa-row select {
+    padding: 10px 8px;
+    font-size: 0.95rem;
+  }
+
+  .tip-card {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .partner-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Finances page (finances.html) — true cost + AP/IB credit value
+   ========================================================================== */
+
+.fin-card {
+  max-width: var(--tool-col);
+}
+
+.fin-card + .fin-card {
+  margin-top: 26px;
+}
+
+/* --- Three input groups of the true-cost tool --- */
+.fin-groups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.fin-group {
+  padding: 20px 20px 14px;
+  background: var(--beige);
+  border: 1px solid var(--grey-line);
+  border-radius: calc(var(--radius-card) - 8px);
+}
+
+.fin-group h3,
+.fin-exams h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--navy);
+}
+
+.fin-hint {
+  margin: 2px 0 16px;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--grey-text);
+}
+
+.fin-group .form-field {
+  margin-bottom: 12px;
+}
+
+.fin-group .form-field input {
+  background: #ffffff;
+}
+
+.fin-subtotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--grey-line);
+  font-size: 0.88rem;
+  color: var(--grey-text);
+}
+
+.fin-subtotal b {
+  font-weight: 500;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+  min-width: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+/* --- Result tiles --- */
+.fin-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 26px 0;
+}
+
+.fin-stat {
+  padding: 16px 18px;
+  border: 1px solid var(--grey-line);
+  border-radius: calc(var(--radius-card) - 8px);
+  background: var(--beige);
+}
+
+.fin-stat.is-dark {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+
+.fin-stat-label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.fin-stat.is-dark .fin-stat-label {
+  color: rgba(254, 253, 250, 0.65);
+}
+
+.fin-stat-value {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.fin-stat.is-dark .fin-stat-value {
+  color: var(--beige);
+}
+
+/* --- Charts --- */
+.fin-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.fin-chart {
+  padding: 20px;
+  border: 1px solid var(--grey-line);
+  border-radius: calc(var(--radius-card) - 8px);
+  background: #ffffff;
+}
+
+.fin-chart h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: var(--navy);
+}
+
+.fin-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fin-chart svg text {
+  font-family: var(--font-sans);
+  font-weight: 300;
+}
+
+.fin-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: var(--grey-text);
+}
+
+.fin-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.fin-legend i {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+}
+
+.fin-note {
+  margin: 22px auto 0;
+  max-width: 70ch;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--grey-text);
+}
+
+/* --- AP/IB exam repeater --- */
+.fin-exams {
+  max-width: 620px;
+}
+
+.fin-exam-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 120px 44px;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 12px;
+}
+
+.fin-exam-row .form-field {
+  margin-bottom: 0;
+}
+
+.fin-remove {
+  height: 46px;
+  border: 1px solid var(--grey-line);
+  border-radius: calc(var(--radius-card) - 12px);
+  background: var(--beige);
+  color: var(--grey-text);
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.fin-remove:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+/* --- Tier progress toward a 120-credit degree --- */
+.fin-tiers {
+  display: grid;
+  gap: 14px;
+  margin: 28px 0;
+}
+
+.fin-tier {
+  padding: 18px 20px;
+  border: 1px solid var(--grey-line);
+  border-radius: calc(var(--radius-card) - 8px);
+  background: var(--beige);
+}
+
+.fin-tier-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.fin-tier-head h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--navy);
+}
+
+.fin-tier-note {
+  font-size: 0.76rem;
+  letter-spacing: 0.03em;
+  color: var(--grey-text);
+}
+
+.fin-tier-meta {
+  margin-top: 6px;
+  font-size: 0.86rem;
+  color: var(--grey-text);
+}
+
+.fin-tier-meta b {
+  font-weight: 500;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.fin-track {
+  height: 12px;
+  margin-top: 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(15, 21, 42, 0.08);
+  overflow: hidden;
+}
+
+.fin-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: var(--radius-pill);
+  background: var(--navy);
+  transition: width 0.6s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.fin-fill.is-mid {
+  background: #3d4a75;
+}
+
+.fin-fill.is-broad {
+  background: #b9a97f;
+}
+
+/* --- Tuition value callout --- */
+.fin-roi {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 24px 28px;
+  border-radius: calc(var(--radius-card) - 8px);
+  background: var(--navy);
+  color: var(--beige);
+}
+
+.fin-roi-label {
+  display: block;
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(254, 253, 250, 0.65);
+}
+
+.fin-roi-value {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-variant-numeric: tabular-nums;
+}
+
+.fin-roi-note {
+  max-width: 40ch;
+  font-size: 0.84rem;
+  color: rgba(254, 253, 250, 0.65);
+}
+
+.fin-roi-note b {
+  font-weight: 500;
+  color: var(--beige);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 960px) {
+  .fin-groups {
+    grid-template-columns: 1fr;
+  }
+
+  .fin-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fin-charts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  /* The exam name needs the full line — score and remove drop beneath */
+  .fin-exam-row {
+    grid-template-columns: minmax(0, 1fr) 44px;
+  }
+
+  .fin-exam-row .form-field:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .fin-roi {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================================================
+   Countdown to College checklist (timelines.html)
+   ========================================================================== */
+
+.cdl-onboard {
+  max-width: var(--tool-col);
+}
+
+.cdl-h {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--navy);
+}
+
+.cdl-hint {
+  margin: 2px 0 22px;
+  font-size: 0.82rem;
+  color: var(--grey-text);
+  letter-spacing: 0.03em;
+}
+
+.cdl-group {
+  margin-bottom: 26px;
+}
+
+.cdl-group h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.cdl-soft {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 0.8rem;
+  color: var(--grey-text);
+}
+
+.cdl-choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.cdl-choice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border: 1px solid var(--grey-line);
+  border-radius: 10px;
+  background: var(--beige);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cdl-choice input {
+  accent-color: var(--navy);
+  width: 15px;
+  height: 15px;
+  flex: none;
+  cursor: pointer;
+}
+
+.cdl-choice:has(input:checked) {
+  border-color: var(--navy);
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px var(--navy);
+}
+
+/* --- Plan header: progress + deadline clock --- */
+.cdl-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 22px;
+  align-items: center;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  background: #ffffff;
+  box-shadow: 0 24px 50px -34px rgba(15, 21, 42, 0.4);
+  padding: 24px 28px;
+  margin-bottom: 22px;
+}
+
+.cdl-prog-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+
+.cdl-prog-label b {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.cdl-track {
+  height: 12px;
+  margin-top: 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(15, 21, 42, 0.08);
+  overflow: hidden;
+}
+
+.cdl-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: var(--radius-pill);
+  background: var(--navy);
+  transition: width 0.5s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.cdl-counts {
+  margin-top: 8px;
+  font-size: 0.84rem;
+  color: var(--grey-text);
+}
+
+.cdl-clock {
+  text-align: center;
+  border-left: 1px dashed var(--grey-line);
+  padding-left: 26px;
+}
+
+.cdl-days {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 2.3rem;
+  color: var(--navy);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.cdl-what {
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  margin-top: 6px;
+  max-width: 24ch;
+}
+
+/* --- Milestones + tasks --- */
+.cdl-mile {
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  background: #ffffff;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.cdl-mile summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 24px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cdl-mile summary::-webkit-details-marker {
+  display: none;
+}
+
+.cdl-mile summary h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--navy);
+  flex: 1;
+}
+
+.cdl-mile.is-complete summary h3 {
+  color: var(--grey-text);
+}
+
+.cdl-mile-count {
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  color: var(--grey-text);
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-pill);
+  padding: 3px 12px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.cdl-chev {
+  width: 11px;
+  height: 11px;
+  border-right: 1.5px solid var(--grey-text);
+  border-bottom: 1.5px solid var(--grey-text);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  flex: none;
+  margin-top: -4px;
+}
+
+.cdl-mile[open] .cdl-chev {
+  transform: rotate(225deg);
+  margin-top: 4px;
+}
+
+.cdl-mile-body {
+  border-top: 1px solid var(--grey-line);
+  padding: 6px 24px 14px;
+}
+
+.cdl-task {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--grey-line);
+}
+
+.cdl-task:last-child {
+  border-bottom: 0;
+}
+
+.cdl-check {
+  appearance: none;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  border: 1.5px solid rgba(15, 21, 42, 0.35);
+  border-radius: 7px;
+  background: var(--beige);
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.cdl-check:checked {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+
+.cdl-check:checked::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border-right: 2px solid var(--beige);
+  border-bottom: 2px solid var(--beige);
+  transform: rotate(40deg);
+}
+
+.cdl-main {
+  flex: 1;
+  min-width: 0;
+  transition: opacity 0.25s ease;
+}
+
+.cdl-task.is-done .cdl-main {
+  opacity: 0.45;
+}
+
+.cdl-task.is-done .cdl-title {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.cdl-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cdl-title {
+  font-weight: 400;
+  font-size: 0.98rem;
+}
+
+.cdl-badge {
+  flex: none;
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  padding: 2px 10px;
+}
+
+.cdl-badge.p-high {
+  background: var(--navy);
+  color: var(--beige);
+}
+
+.cdl-badge.p-med {
+  border: 1px solid var(--navy);
+  color: var(--navy);
+}
+
+.cdl-badge.p-low {
+  border: 1px solid var(--grey-line);
+  color: var(--grey-text);
+}
+
+.cdl-desc {
+  font-size: 0.85rem;
+  color: var(--grey-text);
+  margin-top: 3px;
+  max-width: 70ch;
+}
+
+.cdl-more {
+  margin-top: 6px;
+}
+
+.cdl-more button {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.cdl-more button:hover {
+  color: var(--navy);
+}
+
+.cdl-tip {
+  display: none;
+  margin-top: 8px;
+  font-size: 0.84rem;
+  color: var(--grey-text);
+  background: var(--beige);
+  border: 1px dashed rgba(15, 21, 42, 0.3);
+  border-radius: 10px;
+  padding: 10px 14px;
+  max-width: 66ch;
+}
+
+.cdl-tip.is-open {
+  display: block;
+}
+
+.cdl-foot {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+.cdl-ghost {
+  background: none;
+  border: 1px solid rgba(15, 21, 42, 0.3);
+  color: var(--grey-text);
+  border-radius: var(--radius-pill);
+  padding: 11px 24px;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.cdl-ghost:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+@media (max-width: 720px) {
+  .cdl-choices {
+    grid-template-columns: 1fr;
+  }
+
+  .cdl-top {
+    grid-template-columns: 1fr;
+  }
+
+  .cdl-clock {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px dashed var(--grey-line);
+    padding-top: 16px;
+  }
+}
+
+/* ==========================================================================
+   Aid letter de-coder (finances.html)
+   ========================================================================== */
+
+/* Money semantics — sampled from the GPA gauge gradient */
+.dot-free { background: #2f7d4f; }
+.dot-work { background: #b9a23a; }
+.dot-loan { background: #b0552f; }
+.dot-gap  { background: #767f96; } /* same slate as the true-cost chart */
+
+.dec-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.dec-college {
+  padding: 20px 20px 12px;
+  background: var(--beige);
+  border: 1px solid var(--grey-line);
+  border-radius: calc(var(--radius-card) - 8px);
+}
+
+.dec-college .form-field {
+  margin-bottom: 10px;
+}
+
+.dec-college .form-field input {
+  background: #ffffff;
+}
+
+.dec-name input {
+  font-weight: 400;
+}
+
+.dec-cat {
+  margin: 16px 0 8px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--grey-line);
+}
+
+.dec-cat .cat-name {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.dec-cat .cat-note {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--grey-text);
+  letter-spacing: 0.03em;
+}
+
+.cat-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  margin-right: 7px;
+  vertical-align: 1px;
+}
+
+.dec-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.dec-card {
+  border: 1px solid var(--grey-line);
+  border-radius: calc(var(--radius-card) - 8px);
+  background: var(--beige);
+  padding: 20px 22px;
+}
+
+.dec-card.is-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--grey-text);
+  font-size: 0.85rem;
+  min-height: 150px;
+  border-style: dashed;
+  text-align: center;
+}
+
+.dec-card h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--navy);
+  overflow-wrap: anywhere;
+}
+
+.dec-net-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  margin-top: 12px;
+}
+
+.dec-net {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 2rem;
+  color: var(--navy);
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.dec-rows {
+  margin-top: 14px;
+  border-top: 1px dashed rgba(15, 21, 42, 0.3);
+  padding-top: 10px;
+}
+
+.dec-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.84rem;
+  color: var(--grey-text);
+  padding: 3px 0;
+}
+
+.dec-row b {
+  font-weight: 500;
+  color: var(--ink, #121317);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.dec-row.warn b {
+  color: #b0552f;
+}
+
+.dec-warn {
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: #b0552f;
+  border: 1px dashed #b0552f;
+  border-radius: 10px;
+  padding: 8px 12px;
+  line-height: 1.45;
+}
+
+.dec-chartcard {
+  margin-top: 26px;
+}
+
+.dec-empty {
+  color: var(--grey-text);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.dec-insight {
+  margin-top: 22px;
+  border-radius: calc(var(--radius-card) - 8px);
+  background: var(--navy);
+  color: var(--beige);
+  padding: 22px 26px;
+}
+
+.dec-in-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(254, 253, 250, 0.65);
+}
+
+.dec-insight p {
+  margin-top: 8px;
+  font-size: 0.98rem;
+  max-width: 75ch;
+}
+
+@media (max-width: 900px) {
+  .dec-grid,
+  .dec-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Finances quick-nav (finances.html)
+   ========================================================================== */
+
+.fin-nav-section {
+  padding: 0 0 26px;
+}
+
+.fin-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.fin-nav a {
+  color: var(--navy);
+  text-decoration: none;
+  border: 1px solid rgba(15, 21, 42, 0.3);
+  border-radius: var(--radius-pill);
+  padding: 9px 20px;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.fin-nav a:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+/* Anchored tools land below the floating header */
+#true-cost, #credit-value, #decoder, #pivot, #jargon, #email, #college-countdown {
+  scroll-margin-top: 110px;
+}
+
+/* ==========================================================================
+   Jargon translator (college-life.html)
+   ========================================================================== */
+
+.jg-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: end;
+  max-width: var(--tool-col);
+  margin: 0 auto 14px;
+}
+
+.jg-controls .form-field {
+  margin-bottom: 0;
+}
+
+.jg-count {
+  font-size: 0.8rem;
+  color: var(--grey-text);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  padding-bottom: 14px;
+}
+
+.jg-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: var(--tool-col);
+  margin: 0 auto 30px;
+}
+
+.jg-chip {
+  border: 1px solid rgba(15, 21, 42, 0.3);
+  background: none;
+  color: var(--grey-text);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.jg-chip:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.jg-chip.is-on {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+.jg-grid {
+  /* Masonry via CSS columns: cards keep their natural height and flow
+     to fill the vertical space, so a shorter card never leaves a hole
+     above the next row the way a fixed-row grid does. */
+  columns: 2;
+  column-gap: 16px;
+  max-width: var(--tool-col);
+  margin: 0 auto;
+}
+
+.jg-card {
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  background: #ffffff;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* keep each card whole and give the column-flow its vertical rhythm */
+  break-inside: avoid;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.jg-card.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.jg-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.jg-card h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--navy);
+}
+
+.jg-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.jg-tag {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-pill);
+  padding: 2px 9px;
+  white-space: nowrap;
+}
+
+/* Ukrainian aid — visible only when the site runs in Ukrainian */
+.jg-ua {
+  display: none;
+  font-size: 0.8rem;
+  color: var(--grey-text);
+  background: var(--beige-dim);
+  border-radius: 8px;
+  padding: 7px 11px;
+}
+
+.jg-ua b {
+  font-weight: 500;
+  color: var(--navy);
+}
+
+html[lang="uk"] .jg-ua {
+  display: block;
+}
+
+.jg-official {
+  font-size: 0.84rem;
+  color: var(--grey-text);
+  border-left: 2px solid rgba(15, 21, 42, 0.3);
+  padding-left: 12px;
+  font-style: italic;
+}
+
+.jg-official b,
+.jg-plain b,
+.jg-trick b,
+.jg-action b {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.jg-official b { color: var(--grey-text); }
+
+.jg-plain {
+  font-size: 0.95rem;
+}
+
+.jg-plain b { color: var(--navy); }
+
+.jg-trick {
+  background: #f2ecdd;
+  border: 1px solid rgba(185, 169, 127, 0.5);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.88rem;
+}
+
+.jg-trick b { color: #78693f; }
+
+.jg-action {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: var(--navy);
+  color: var(--beige);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.88rem;
+  margin-top: auto;
+}
+
+.jg-action b { color: rgba(254, 253, 250, 0.65); }
+
+.jg-copy {
+  flex: none;
+  border: 1px solid rgba(254, 253, 250, 0.4);
+  background: none;
+  color: var(--beige);
+  border-radius: var(--radius-pill);
+  padding: 6px 13px;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.jg-copy:hover,
+.jg-copy.is-done {
+  background: var(--beige);
+  color: var(--navy);
+}
+
+.jg-none {
+  column-span: all;
+  text-align: center;
+  color: var(--grey-text);
+  padding: 50px 20px;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 860px) {
+  .jg-grid {
+    columns: 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .jg-controls {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Major pivot risk assessor (finances.html)
+   ========================================================================== */
+
+.pv-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  max-width: 720px;
+}
+
+.pv-score {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 26px;
+  align-items: center;
+  border: 1px solid var(--grey-line);
+  border-radius: calc(var(--radius-card) - 8px);
+  background: var(--beige);
+  padding: 22px 26px;
+  margin-top: 16px;
+}
+
+.pv-num {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 3.2rem;
+  line-height: 1;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.pv-num small {
+  font-size: 1.4rem;
+}
+
+.pv-tier {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  padding: 4px 14px;
+}
+
+.pv-tier.low  { background: #2f7d4f; color: var(--beige); }
+.pv-tier.mod  { background: #b9a97f; color: var(--navy); }
+.pv-tier.high { background: #b0552f; color: var(--beige); }
+
+.pv-read {
+  font-size: 0.9rem;
+  color: var(--grey-text);
+  max-width: 60ch;
+}
+
+.pv-read b {
+  color: var(--ink, #121317);
+  font-weight: 500;
+}
+
+.pv-track {
+  height: 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(15, 21, 42, 0.08);
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.pv-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: var(--radius-pill);
+  background: var(--navy);
+  transition: width 0.6s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.pv-venn {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.pv-col {
+  border: 1px solid var(--grey-line);
+  border-radius: calc(var(--radius-card) - 8px);
+  background: var(--beige);
+  padding: 18px 20px;
+}
+
+.pv-col.shared {
+  background: #f2ecdd;
+  border-color: rgba(185, 169, 127, 0.6);
+}
+
+.pv-col h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--navy);
+}
+
+.pv-col-sub {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  margin: 2px 0 12px;
+}
+
+.pv-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.pv-course {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.85rem;
+  border: 1px solid var(--grey-line);
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 7px 11px;
+}
+
+.pv-course span {
+  min-width: 0;
+}
+
+.pv-course em {
+  font-style: normal;
+  color: var(--grey-text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pv-emptycol {
+  font-size: 0.82rem;
+  color: var(--grey-text);
+  font-style: italic;
+}
+
+.pv-road {
+  margin-top: 22px;
+  border: 1px solid var(--grey-line);
+  border-radius: calc(var(--radius-card) - 8px);
+  background: #ffffff;
+  padding: 20px 22px;
+}
+
+.pv-road h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--navy);
+}
+
+.pv-road-hint {
+  font-size: 0.8rem;
+  color: var(--grey-text);
+  margin: 2px 0 16px;
+  letter-spacing: 0.03em;
+}
+
+.pv-buckets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.pv-bucket {
+  border: 1px solid var(--grey-line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  background: var(--beige);
+}
+
+.pv-bucket h4 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pv-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex: none;
+}
+
+.pv-bucket.safe h4 { color: #2f7d4f; }
+.pv-bucket.safe .pv-dot { background: #2f7d4f; }
+.pv-bucket.sunk h4 { color: #b0552f; }
+.pv-bucket.sunk .pv-dot { background: #b0552f; }
+
+.pv-bucket p {
+  font-size: 0.8rem;
+  color: var(--grey-text);
+  margin-bottom: 10px;
+}
+
+.pv-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.pv-chip {
+  font-size: 0.8rem;
+  border-radius: var(--radius-pill);
+  padding: 5px 13px;
+  border: 1px solid rgba(15, 21, 42, 0.28);
+  background: #ffffff;
+}
+
+.pv-bucket.safe .pv-chip { border-color: rgba(47, 125, 79, 0.45); }
+.pv-bucket.sunk .pv-chip { border-color: rgba(176, 85, 47, 0.45); }
+
+.pv-money {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.pv-money .form-field {
+  max-width: 190px;
+  margin-bottom: 0;
+}
+
+.pv-cost {
+  border: 1px solid var(--grey-line);
+  border-radius: 12px;
+  background: var(--beige);
+  padding: 16px 20px;
+}
+
+.pv-cost h5 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  margin-bottom: 8px;
+}
+
+.pv-cost-big {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.6rem;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.pv-cost.risky .pv-cost-big {
+  color: #b0552f;
+}
+
+.pv-cost-sub {
+  font-size: 0.8rem;
+  color: var(--grey-text);
+  margin-top: 4px;
+}
+
+.pv-note {
+  margin-top: 20px;
+  border-radius: 12px;
+  background: var(--navy);
+  color: var(--beige);
+  padding: 18px 22px;
+  font-size: 0.92rem;
+}
+
+.pv-note b {
+  font-weight: 500;
+}
+
+@media (max-width: 860px) {
+  .pv-venn,
+  .pv-buckets,
+  .pv-money {
+    grid-template-columns: 1fr;
+  }
+
+  .pv-money .form-field {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .pv-inputs,
+  .pv-score {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Ukrainian grade converter + NMT estimator (calculators.html)
+   ========================================================================== */
+
+#gpa, #ua-gpa, #nmt {
+  scroll-margin-top: 110px;
+}
+
+/* --- Converter rows: name | scale | grade | credits | letter | remove --- */
+.uac-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.uac-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) 150px 92px 78px 64px 42px;
+  gap: 10px;
+  align-items: center;
+}
+
+.uac-row input,
+.uac-row select {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 0.92rem;
+  padding: 10px 12px;
+  border: 1px solid rgba(15, 21, 42, 0.28);
+  border-radius: 8px;
+  background: var(--beige);
+  color: var(--ink, #121317);
+}
+
+.uac-row input:focus,
+.uac-row select:focus {
+  outline: 2px solid var(--navy);
+  outline-offset: 1px;
+}
+
+.uac-row input.is-invalid {
+  border-color: #8c2f2f;
+  outline-color: #8c2f2f;
+}
+
+.uac-letter-chip {
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.88rem;
+  color: var(--navy);
+  border: 1px solid var(--grey-line);
+  border-radius: 8px;
+  padding: 9px 0;
+  background: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.uac-letter-chip.is-muted {
+  color: var(--grey-text);
+  font-weight: 300;
+}
+
+.uac-remove {
+  height: 40px;
+  border: 1px solid var(--grey-line);
+  border-radius: 8px;
+  background: var(--beige);
+  color: var(--grey-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.uac-remove:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+.uac-remove svg {
+  width: 14px;
+  height: 14px;
+}
+
+.uac-err {
+  grid-column: 1 / -1;
+  font-size: 0.78rem;
+  color: #8c2f2f;
+  margin: -2px 0 0;
+  min-height: 0;
+}
+
+.uac-err:empty {
+  display: none;
+}
+
+.uac-mixed-note {
+  font-size: 0.8rem;
+  color: var(--grey-text);
+  letter-spacing: 0.03em;
+  align-self: end;
+  padding-bottom: 12px;
+}
+
+.uac-counted {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--grey-text);
+  margin-top: 10px;
+}
+
+.uac-note {
+  max-width: var(--tool-col);
+  margin: 24px auto 0;
+  background: #f2ecdd;
+  border: 1px solid rgba(185, 169, 127, 0.55);
+  border-radius: 12px;
+  padding: 18px var(--prose-inset);
+  font-size: 0.88rem;
+  color: var(--ink, #121317);
+  line-height: 1.6;
+}
+
+/* Inside a card the note is already inside the tool column, so it runs
+   the full inner width — insetting it again would look like a mistake. */
+.calc-card .uac-note {
+  max-width: none;
+  padding: 16px 20px;
+}
+
+.uac-note b {
+  font-weight: 500;
+  color: var(--navy);
+}
+
+@media (max-width: 860px) {
+  /* Two tidy lines per class: the name on top, then scale · grade ·
+     letter · remove sharing one row (credits default to 1 on phones) */
+  .uac-row {
+    grid-template-columns: minmax(0, 1fr) 52px 46px 34px;
+    gap: 8px;
+  }
+
+  .uac-row .uac-name { grid-column: 1 / -1; }
+  .uac-row .uac-credits { display: none; }
+  .uac-row input,
+  .uac-row select { padding: 10px 8px; }
+  .uac-remove { height: 38px; }
+}
+
+/* --- NMT estimator --- */
+.nmt-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 620px;
+}
+
+.nmt-results {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.nmt-range-card {
+  border: 1px solid var(--navy);
+  background: var(--navy);
+  color: var(--beige);
+  border-radius: calc(var(--radius-card) - 8px);
+  padding: 18px 22px;
+  text-align: center;
+}
+
+.nmt-range-card.is-secondary {
+  background: var(--beige);
+  border-color: var(--grey-line);
+  color: var(--navy);
+}
+
+.nmt-range-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgba(254, 253, 250, 0.65);
+}
+
+.nmt-range-card.is-secondary .nmt-range-tag {
+  color: var(--grey-text);
+}
+
+.nmt-range {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.nmt-why {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nmt-why:empty {
+  display: none;
+}
+
+.nmt-why-line {
+  font-size: 0.86rem;
+  color: var(--grey-text);
+  border-left: 2px solid rgba(185, 169, 127, 0.8);
+  padding-left: 12px;
+}
+
+.nmt-why-line b {
+  color: var(--ink, #121317);
+  font-weight: 500;
+}
+
+.nmt-next {
+  margin-top: 22px;
+}
+
+.nmt-next-label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  margin-bottom: 10px;
+}
+
+.nmt-next-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.nmt-next-links a {
+  color: var(--navy);
+  text-decoration: none;
+  border: 1px solid rgba(15, 21, 42, 0.3);
+  border-radius: var(--radius-pill);
+  padding: 8px 18px;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.nmt-next-links a:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+@media (max-width: 640px) {
+  .nmt-inputs,
+  .nmt-results {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Education record helper (timeline-builder.html)
+   ========================================================================== */
+
+#record-helper {
+  scroll-margin-top: 110px;
+}
+
+/* The lede note that opens a tool page. It shares the tool column so its
+   edges line up with the card beneath it; the text is pulled in by
+   padding rather than by a narrower box, which keeps the line around 95
+   characters without breaking that alignment. */
+.tb-intro {
+  max-width: var(--tool-col);
+  margin: 0 auto 40px;
+  background: var(--beige-dim);
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  padding: 24px var(--prose-inset);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.tb-intro b {
+  font-weight: 500;
+  color: var(--navy);
+}
+
+/* --- Step 1: spine of editable entries --- */
+.tb-spine {
+  position: relative;
+  padding-left: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.tb-spine::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: rgba(15, 21, 42, 0.18);
+}
+
+.tb-entry {
+  position: relative;
+  border: 1px solid var(--grey-line);
+  border-radius: calc(var(--radius-card) - 8px);
+  background: var(--beige);
+  padding: 16px 18px;
+}
+
+.tb-entry::before {
+  content: "";
+  position: absolute;
+  left: -31px;
+  top: 26px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--navy);
+  border: 2px solid var(--beige);
+  box-shadow: 0 0 0 2px rgba(15, 21, 42, 0.18);
+}
+
+.tb-entry.has-flags::before {
+  background: #b9a97f;
+}
+
+.tb-entry-grid {
+  display: grid;
+  grid-template-columns: 130px 130px minmax(0, 1fr) minmax(0, 1fr) 42px;
+  gap: 10px;
+  align-items: end;
+}
+
+.tb-entry-grid .form-field {
+  margin-bottom: 0;
+}
+
+.tb-entry-grid2 {
+  display: grid;
+  grid-template-columns: 170px 150px minmax(0, 1fr);
+  gap: 10px;
+  align-items: end;
+  margin-top: 10px;
+}
+
+.tb-entry-grid2 .form-field {
+  margin-bottom: 0;
+}
+
+.tb-entry .form-field input,
+.tb-entry .form-field select {
+  background: #ffffff;
+  font-size: 0.9rem;
+  padding: 9px 11px;
+}
+
+.tb-entry-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.tb-flagchip {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: #6e5f39;
+  background: #f2ecdd;
+  border: 1px solid rgba(185, 169, 127, 0.6);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+}
+
+.tb-remove {
+  height: 40px;
+  border: 1px solid var(--grey-line);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--grey-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.tb-remove:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+.tb-remove svg {
+  width: 14px;
+  height: 14px;
+}
+
+.tb-clean {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #2f7d4f;
+  border: 1px dashed rgba(47, 125, 79, 0.5);
+  border-radius: 12px;
+  padding: 14px 18px;
+}
+
+/* --- Step 2–3: gap blocks --- */
+.tb-gap {
+  border: 1px solid var(--grey-line);
+  border-radius: calc(var(--radius-card) - 8px);
+  background: var(--beige);
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+
+.tb-gap-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tb-gap-num {
+  flex: none;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--beige);
+  background: #b9a97f;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tb-gap-title {
+  font-size: 0.94rem;
+  font-weight: 400;
+  color: var(--ink, #121317);
+}
+
+.tb-gap-where {
+  font-size: 0.78rem;
+  color: var(--grey-text);
+  letter-spacing: 0.03em;
+}
+
+.tb-gap .form-field {
+  margin: 14px 0 0;
+  max-width: 460px;
+}
+
+.tb-gap .form-field select {
+  background: #ffffff;
+}
+
+.tb-template {
+  margin-top: 14px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 0.94rem;
+  line-height: 2.1;
+}
+
+.tb-blank {
+  display: inline-block;
+  border: 0;
+  border-bottom: 1.5px solid rgba(15, 21, 42, 0.4);
+  background: var(--beige-dim);
+  border-radius: 4px 4px 0 0;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--navy);
+  padding: 2px 8px;
+  margin: 0 2px;
+  min-width: 60px;
+}
+
+.tb-blank:focus {
+  outline: 2px solid var(--navy);
+  outline-offset: 1px;
+}
+
+.tb-gap-skip {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--grey-text);
+  font-style: italic;
+}
+
+.tb-evidence {
+  margin-top: 12px;
+}
+
+.tb-evidence-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.tb-evidence ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tb-evidence li {
+  font-size: 0.84rem;
+  color: var(--grey-text);
+  padding-left: 16px;
+  position: relative;
+}
+
+.tb-evidence li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: #b9a97f;
+}
+
+.tb-nogaps {
+  text-align: center;
+  color: var(--grey-text);
+  font-size: 0.92rem;
+  padding: 30px 20px;
+}
+
+/* --- Word budget --- */
+.tb-budget {
+  margin-top: 20px;
+}
+
+.tb-budget-track {
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(15, 21, 42, 0.08);
+  overflow: hidden;
+}
+
+.tb-budget-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: var(--radius-pill);
+  background: var(--navy);
+  transition: width 0.4s ease, background-color 0.3s ease;
+}
+
+.tb-budget.is-warn .tb-budget-fill { background: #b9a23a; }
+.tb-budget.is-over .tb-budget-fill { background: #8c2f2f; }
+
+.tb-budget-line {
+  margin-top: 8px;
+  font-size: 0.84rem;
+  color: var(--grey-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.tb-budget.is-over .tb-budget-line {
+  color: #8c2f2f;
+}
+
+/* --- Summary --- */
+.tb-summary {
+  border: 1px dashed rgba(15, 21, 42, 0.35);
+  border-radius: 12px;
+  background: var(--beige);
+  padding: 20px 24px;
+  font-size: 0.92rem;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.tb-summary-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+@media (max-width: 860px) {
+  .tb-entry-grid,
+  .tb-entry-grid2 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tb-entry-grid .tb-f-school,
+  .tb-entry-grid2 .tb-f-note {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Print: the summary is the document */
+@media print {
+  body.tb-printing .site-header,
+  body.tb-printing .page-hero,
+  body.tb-printing .tb-intro,
+  body.tb-printing .section-head,
+  body.tb-printing #tb-builder,
+  body.tb-printing #tb-gaps-card,
+  body.tb-printing .tb-summary-actions,
+  body.tb-printing .closing-band,
+  body.tb-printing .site-footer {
+    display: none !important;
+  }
+
+  body.tb-printing #tb-summary-card {
+    box-shadow: none;
+    border: 0;
+  }
+
+  body.tb-printing .tb-summary {
+    border: 0;
+    padding: 0;
+  }
+}
+
+/* ==========================================================================
+   International financial aid finder (financial-aid-finder.html)
+   ========================================================================== */
+
+#aid-finder {
+  scroll-margin-top: 110px;
+}
+
+.af-controls {
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  background: #ffffff;
+  box-shadow: 0 24px 50px -34px rgba(15, 21, 42, 0.4);
+  padding: 24px 28px;
+  max-width: var(--tool-col);
+  margin: 36px auto 22px;
+}
+
+.af-filter-group {
+  margin-bottom: 16px;
+}
+
+.af-filter-label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  margin-bottom: 8px;
+}
+
+.af-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Auto-fit rather than a fixed five columns: the widest control here is
+   the sort <select> ("Aid strength — not prestige"), which needs roughly
+   180px before the browser clips it against its own chevron. A 230px
+   floor keeps every column above that at any container width, and the
+   row simply drops to fewer columns instead of squeezing.
+   min() so the track can still shrink below 230px on a narrow phone. */
+.af-selects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+  gap: 12px;
+  margin-top: 6px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--grey-line);
+}
+
+.af-selects .form-field {
+  margin-bottom: 0;
+}
+
+.af-selects .form-field input,
+.af-selects .form-field select {
+  font-size: 0.88rem;
+  padding: 9px 11px;
+}
+
+.af-count {
+  margin-top: 14px;
+  font-size: 0.84rem;
+  color: var(--grey-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Result cards --- */
+.af-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  max-width: var(--tool-col);
+  margin: 0 auto;
+}
+
+.af-card {
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  background: #ffffff;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.af-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.af-card h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--navy);
+}
+
+.af-place {
+  font-size: 0.78rem;
+  color: var(--grey-text);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.af-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.af-badge {
+  font-size: 0.66rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  padding: 3px 11px;
+  border: 1px solid transparent;
+}
+
+.af-badge.p-blind { background: #2f7d4f; color: var(--beige); }
+.af-badge.p-aware { background: #b9a97f; color: var(--navy); }
+.af-badge.p-none  { background: none; border-color: rgba(15, 21, 42, 0.3); color: var(--grey-text); }
+.af-badge.b-need  { background: var(--navy); color: var(--beige); }
+.af-badge.b-partial { background: none; border-color: var(--navy); color: var(--navy); }
+.af-badge.b-noloan { background: none; border-color: rgba(47, 125, 79, 0.5); color: #2f7d4f; }
+.af-badge.b-trans { background: #f2ecdd; border-color: rgba(185, 169, 127, 0.6); color: #6e5f39; }
+
+/* Every result states its "why" — visible reasoning, not a bare icon */
+.af-why {
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.af-stat {
+  font-size: 0.82rem;
+  color: var(--grey-text);
+}
+
+.af-trans {
+  background: #f2ecdd;
+  border: 1px solid rgba(185, 169, 127, 0.55);
+  border-radius: 10px;
+  padding: 10px 13px;
+  font-size: 0.82rem;
+}
+
+.af-trans b {
+  font-weight: 500;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #78693f;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.af-note {
+  font-size: 0.82rem;
+  color: var(--grey-text);
+  font-style: italic;
+}
+
+.af-foot {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px dashed var(--grey-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.af-src {
+  font-size: 0.72rem;
+  color: var(--grey-faint);
+  letter-spacing: 0.03em;
+}
+
+.af-link {
+  flex: none;
+  color: var(--navy);
+  text-decoration: none;
+  border: 1px solid rgba(15, 21, 42, 0.3);
+  border-radius: var(--radius-pill);
+  padding: 7px 16px;
+  font-size: 0.74rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.af-link:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+.af-none {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--grey-text);
+  font-size: 0.95rem;
+  padding: 56px 20px;
+}
+
+@media (max-width: 860px) {
+  .af-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+
+
+/* ==========================================================================
+   College list builder / match engine (college-list.html)
+   ========================================================================== */
+
+#college-list {
+  scroll-margin-top: 110px;
+}
+
+/* --- Imported-profile notice --- */
+.cl-import {
+  background: #f2ecdd;
+  border: 1px solid rgba(185, 169, 127, 0.55);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.cl-import b {
+  font-weight: 500;
+  color: var(--navy);
+}
+
+.cl-import a {
+  color: var(--navy);
+}
+
+/* --- Profile inputs --- */
+/* The profile card fills the same width as the summary strip and the
+   result tiers below it. At .calc-card's default 860px the four inputs
+   were cramped into a narrower box than everything under them, which
+   read as a misalignment rather than a design. */
+/* The builder, its shortlist strip and every result tier share the one
+   tool column (--tool-col) so the whole page keeps a single left and
+   right edge. Before v20.1.1 the card was full-container while the notes
+   around it were not, and no two boxes lined up. */
+#cl-builder,
+.cl-shortlist,
+.cl-tier {
+  max-width: var(--tool-col);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cl-profile {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cl-profile .form-field {
+  margin-bottom: 0;
+}
+
+.cl-hint {
+  margin-top: 12px;
+  font-size: 0.84rem;
+  color: var(--grey-text);
+}
+
+.cl-hint:empty {
+  display: none;
+}
+
+/* --- Preferences --- */
+.cl-prefs {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--grey-line);
+}
+
+.cl-prefs-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--grey-text);
+  margin-bottom: 12px;
+  max-width: 78ch;
+}
+
+.cl-prefs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cl-prefs-grid .form-field {
+  margin-bottom: 0;
+}
+
+.cl-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 22px;
+}
+
+/* --- Basis-of-comparison note above the results --- */
+.cl-basis {
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  background: #ffffff;
+  box-shadow: 0 24px 50px -34px rgba(15, 21, 42, 0.4);
+  padding: 20px 26px;
+  max-width: var(--tool-col);
+  margin: 36px auto 26px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.cl-basis b {
+  font-weight: 500;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Tier sections --- */
+.cl-tier {
+  margin-bottom: 34px;
+}
+
+
+.cl-tier[hidden] {
+  display: none;
+}
+
+.cl-tier-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px 16px;
+  align-items: baseline;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid var(--navy);
+}
+
+.cl-tier-head h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.35rem;
+  color: var(--navy);
+}
+
+#cl-tier-reach .cl-tier-head { border-bottom-color: #b0552f; }
+#cl-tier-reach .cl-tier-head h3 { color: #b0552f; }
+#cl-tier-safety .cl-tier-head { border-bottom-color: #2f7d4f; }
+#cl-tier-safety .cl-tier-head h3 { color: #2f7d4f; }
+#cl-tier-nodata .cl-tier-head { border-bottom-color: var(--grey-line); }
+#cl-tier-nodata .cl-tier-head h3 { color: var(--grey-text); }
+
+.cl-tier-note {
+  font-size: 0.82rem;
+  color: var(--grey-text);
+  line-height: 1.5;
+  max-width: 72ch;
+}
+
+.cl-tier-count {
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- School cards --- */
+.cl-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cl-card {
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  background: #ffffff;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cl-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cl-card h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--navy);
+}
+
+.cl-place {
+  font-size: 0.76rem;
+  color: var(--grey-text);
+  white-space: nowrap;
+}
+
+.cl-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cl-badge {
+  font-size: 0.66rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  padding: 3px 11px;
+  border: 1px solid transparent;
+}
+
+.cl-badge.c-reach  { background: #b0552f; color: var(--beige); }
+.cl-badge.c-target { background: var(--navy); color: var(--beige); }
+.cl-badge.c-safety { background: #2f7d4f; color: var(--beige); }
+.cl-badge.c-nodata { background: none; border-color: rgba(15, 21, 42, 0.3); color: var(--grey-text); }
+
+.cl-badge.a-strong  { background: none; border-color: rgba(47, 125, 79, 0.6); color: #2f7d4f; }
+.cl-badge.a-weak    { background: none; border-color: rgba(176, 85, 47, 0.6); color: #b0552f; }
+.cl-badge.a-neutral { background: none; border-color: rgba(15, 21, 42, 0.25); color: var(--grey-text); }
+.cl-badge.a-partial { background: none; border-color: rgba(185, 169, 127, 0.75); color: #78693f; }
+
+.cl-src-note {
+  font-size: 0.72rem;
+  color: var(--grey-faint);
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+}
+
+/* The reason sentence — built from this school's real numbers */
+.cl-why {
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.cl-aid-why {
+  font-size: 0.84rem;
+  color: var(--grey-text);
+  line-height: 1.5;
+}
+
+.cl-foot {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px dashed var(--grey-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cl-score {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: rgba(15, 21, 42, 0.5);
+  font-variant-numeric: tabular-nums;
+}
+
+.cl-link {
+  flex: none;
+  color: var(--navy);
+  text-decoration: none;
+  border: 1px solid rgba(15, 21, 42, 0.3);
+  border-radius: var(--radius-pill);
+  padding: 7px 16px;
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.cl-link:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+.cl-empty {
+  grid-column: 1 / -1;
+  color: var(--grey-text);
+  font-size: 0.9rem;
+  padding: 26px 20px;
+  text-align: center;
+  border: 1px dashed var(--grey-line);
+  border-radius: 12px;
+}
+
+/* --- Saved-shortlist strip + per-card save toggle (v19) --- */
+.cl-shortlist {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px 20px;
+  background: #f2ecdd;
+  border: 1px solid rgba(185, 169, 127, 0.55);
+  border-radius: 12px;
+  padding: 13px 20px;
+  margin: -12px 0 26px;
+  font-size: 0.88rem;
+}
+
+.cl-shortlist[hidden] {
+  display: none;
+}
+
+.cl-shortlist a {
+  color: var(--navy);
+  font-weight: 500;
+}
+
+.cl-save-row {
+  display: flex;
+}
+
+.cl-save {
+  border: 1px solid rgba(15, 21, 42, 0.3);
+  background: none;
+  color: var(--navy);
+  border-radius: var(--radius-pill);
+  padding: 6px 15px;
+  font-family: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.cl-save:hover {
+  border-color: var(--navy);
+  background: rgba(15, 21, 42, 0.06);
+}
+
+.cl-save.is-on {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--beige);
+}
+
+@media (max-width: 960px) {
+  .cl-profile,
+  .cl-prefs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .cl-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cl-tier-head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Below this a two-column row leaves ~132px per field, which clips the
+   longest options ("Hide schools that don't match"). Same reasoning as
+   .af-selects — see the note there. */
+@media (max-width: 560px) {
+  .cl-profile,
+  .cl-prefs-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Net price & I-20 funding gap calculator (funding-gap.html, tools.js #16)
+
+   Deliberately shares the match engine's card language (.cl-card-top,
+   .cl-place, .cl-foot, .cl-basis) so a student reads this as the next
+   screen of one flow rather than a separate tool. What is new here is
+   the breakdown ledger: every number that produced the headline, laid
+   out so a family can check the arithmetic line by line.
+   ========================================================================== */
+
+#funding-gap {
+  scroll-margin-top: 110px;
+}
+
+/* Same single-column rule as the match engine — see #cl-builder. */
+#fg-builder,
+.fg-grid,
+.fg-rate {
+  max-width: var(--tool-col);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* .btn sets display:inline-flex, which outranks the UA [hidden] rule —
+   so the attribute alone won't hide the button. Force it. */
+#fg-run[hidden] {
+  display: none;
+}
+
+.fg-import {
+  background: #f2ecdd;
+  border: 1px solid rgba(185, 169, 127, 0.55);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.fg-import[hidden] {
+  display: none;
+}
+
+/* --- Step 1: the school rows --- */
+.fg-schools {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fg-school {
+  border: 1px solid var(--grey-line);
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+  gap: 10px 24px;
+  align-items: center;
+}
+
+.fg-school-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 14px;
+}
+
+.fg-school h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--navy);
+}
+
+.fg-school-place {
+  font-size: 0.76rem;
+  color: var(--grey-text);
+}
+
+.fg-chip {
+  display: inline-block;
+  font-size: 0.62rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  padding: 2px 9px;
+  border: 1px solid transparent;
+  vertical-align: 1px;
+}
+
+.fg-chip.c-reach  { background: #b0552f; color: var(--beige); }
+.fg-chip.c-target { background: var(--navy); color: var(--beige); }
+.fg-chip.c-safety { background: #2f7d4f; color: var(--beige); }
+
+.fg-remove {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--grey-text);
+  font-family: inherit;
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-bottom: 1px solid var(--grey-line);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.fg-remove:hover {
+  color: #8c2f2f;
+  border-color: #8c2f2f;
+}
+
+.fg-award.form-field {
+  margin-bottom: 0;
+}
+
+.fg-hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: var(--grey-text);
+}
+
+.fg-empty {
+  border: 1px dashed var(--grey-line);
+  border-radius: 12px;
+  padding: 26px 22px;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--grey-text);
+}
+
+.fg-empty p + p {
+  margin-top: 8px;
+}
+
+.fg-empty a {
+  color: var(--navy);
+  font-weight: 500;
+}
+
+.fg-add {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--grey-line);
+}
+
+.fg-add .form-field {
+  flex: 1 1 320px;
+  /* A <select>'s min-content width is set by its LONGEST option, and
+     the longest school name here is wider than a phone. Without this,
+     min-width:auto refuses to shrink the field and it gets clipped by
+     main's overflow-x: clip. */
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.fg-add select {
+  width: 100%;
+  max-width: 100%;
+  text-overflow: ellipsis;
+}
+
+/* --- Step 2: the student's own figures --- */
+.fg-money {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--grey-line);
+}
+
+/* Same step-marker treatment as .vs-block-label — see the note there. */
+.fg-money-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #78693f;
+  margin-bottom: 14px;
+}
+
+/* Two columns, not three: the loan <select>'s longest option ("No — we
+   would rather not count on a loan") needs about 360px of field before
+   the browser clips it, and a third column cannot give it that inside
+   the tool column. The loan-amount field simply wraps to the next row. */
+.fg-money-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+/* min-width:0 for the same reason as .fg-add — the loan <select>'s
+   longest option is wider than a phone and would otherwise refuse to
+   shrink, clipping the field. */
+.fg-money-grid .form-field {
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.fg-money-grid select,
+.fg-money-grid input {
+  max-width: 100%;
+}
+
+.fg-money-grid .form-field[hidden] {
+  display: none;
+}
+
+/* Invalid state was previously only styled inside .uac-row; every
+   .form-field input that a tool validates needs it. */
+.form-field input.is-invalid,
+.form-field select.is-invalid {
+  border-color: #8c2f2f;
+  background: rgba(140, 47, 47, 0.04);
+}
+
+/* --- Results --- */
+.fg-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.fg-divider {
+  margin-top: 12px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--grey-line);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--grey-text);
+  max-width: 82ch;
+}
+
+.fg-card {
+  border: 1px solid var(--grey-line);
+  border-left: 3px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  background: #ffffff;
+  padding: 22px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fg-card.s-covered { border-left-color: #2f7d4f; }
+.fg-card.s-gap     { border-left-color: #b0552f; }
+.fg-card.s-nodata  { border-left-color: var(--grey-line); }
+
+.fg-status {
+  font-family: var(--font-serif);
+  font-size: 1.24rem;
+  font-weight: 600;
+  line-height: 1.25;
+  font-variant-numeric: tabular-nums;
+}
+
+.s-covered .fg-status { color: #2f7d4f; }
+.s-gap .fg-status     { color: #b0552f; }
+.s-nodata .fg-status  { color: var(--grey-text); }
+
+/* --- The breakdown ledger --- */
+.fg-breakdown {
+  border: 1px solid var(--grey-line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.fg-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px 22px;
+  align-items: baseline;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--grey-line);
+}
+
+.fg-row:last-child {
+  border-bottom: none;
+}
+
+.fg-row.is-sub {
+  background: rgba(15, 21, 42, 0.025);
+}
+
+.fg-row.is-total {
+  background: rgba(15, 21, 42, 0.045);
+  border-top: 1px solid rgba(15, 21, 42, 0.18);
+}
+
+.fg-row.is-total .fg-row-label,
+.fg-row.is-total .fg-row-value b {
+  font-size: 1rem;
+}
+
+.fg-row.is-total.is-gap .fg-row-value b { color: #b0552f; }
+.fg-row.is-total.is-ok  .fg-row-value b { color: #2f7d4f; }
+/* A ceiling, not a verdict — stays navy so it does not read as an alarm */
+.fg-row.is-total.is-ceiling .fg-row-value b { color: var(--navy); }
+
+.fg-row-label {
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.fg-row-note {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.74rem;
+  line-height: 1.45;
+  color: var(--grey-text);
+}
+
+.fg-row-value {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.fg-row-value b {
+  display: block;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.fg-row-value .fg-unknown {
+  font-weight: 400;
+  font-size: 0.82rem;
+  color: var(--grey-text);
+  font-style: italic;
+}
+
+.fg-uah {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.72rem;
+  color: var(--grey-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.fg-why {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--grey-text);
+  max-width: 84ch;
+}
+
+.fg-flag {
+  font-size: 0.84rem;
+  line-height: 1.55;
+  background: #f2ecdd;
+  border: 1px solid rgba(185, 169, 127, 0.55);
+  border-radius: 10px;
+  padding: 11px 15px;
+}
+
+/* Next steps after a gap. Sand, not red: this is a list of routes
+   forward, and the styling should not read as an alarm. */
+.fg-next {
+  border: 1px solid rgba(185, 169, 127, 0.7);
+  border-left: 3px solid #b9a97f;
+  border-radius: 12px;
+  padding: 15px 19px;
+  background: rgba(242, 236, 221, 0.55);
+}
+
+.fg-next b {
+  display: block;
+  font-weight: 500;
+  color: var(--navy);
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+.fg-next p {
+  font-size: 0.86rem;
+  line-height: 1.6;
+  max-width: 84ch;
+}
+
+.fg-rate {
+  margin: 22px 0 26px;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: var(--grey-text);
+  max-width: 88ch;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 960px) {
+  .fg-money-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fg-school {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .fg-money-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-card {
+    padding: 18px 16px;
+  }
+
+  .fg-row {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 10px 13px;
+  }
+
+  .fg-row-value {
+    text-align: left;
+  }
+
+  .fg-status {
+    font-size: 1.1rem;
+  }
+
+  .fg-add .form-field {
+    flex-basis: 100%;
+  }
+}
+
+/* ==========================================================================
+   Visa & document processing backward-scheduler (visa-scheduler.html, #17)
+
+   Reuses the leveled-timeline .spine component for the results, so a
+   computed schedule reads as the same kind of timeline the rest of the
+   site uses. What is new: a two-phase switch, the document/deadline
+   repeaters, the standing volatility alert, and per-node status colour.
+   ========================================================================== */
+
+#visa-scheduler { scroll-margin-top: 110px; }
+
+/* Phase cards, both tool cards and the standing alert all sit on the one
+   tool column so the page reads as a single stack, not three widths. */
+.vs-phases,
+#vs-a-card,
+#vs-b-card,
+.vs-alert {
+  max-width: var(--tool-col);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vs-import {
+  background: #f2ecdd;
+  border: 1px solid rgba(185, 169, 127, 0.55);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+.vs-import[hidden] { display: none; }
+
+/* --- Phase switch --- */
+/* Capped and centred so the two cards sit under the intro note rather
+   than sprawling the full container width. */
+.vs-phases {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+  align-items: stretch;
+}
+.vs-phase-btn {
+  text-align: left;
+  border: 1px solid var(--grey-line);
+  background: #fff;
+  border-radius: var(--radius-card);
+  padding: 18px 20px;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.vs-phase-btn:hover { border-color: rgba(15, 21, 42, 0.4); }
+.vs-phase-btn.is-on {
+  border-color: var(--navy);
+  box-shadow: 0 16px 36px -30px rgba(15, 21, 42, 0.6);
+  background: #fffdf8;
+}
+.vs-phase-tag {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+.vs-phase-btn.is-on .vs-phase-tag { color: #78693f; }
+.vs-phase-name {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--navy);
+}
+.vs-phase-desc { font-size: 0.86rem; line-height: 1.5; color: var(--grey-text); margin-top: auto; }
+
+#vs-phase-a[hidden], #vs-phase-b[hidden] { display: none; }
+
+/* --- Deadline + document repeaters --- */
+.vs-drow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
+  gap: 12px 16px;
+  align-items: end;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--grey-line);
+}
+.vs-drow .form-field { margin-bottom: 0; min-width: 0; }
+
+.vs-empty {
+  color: var(--grey-text);
+  font-size: 0.9rem;
+  padding: 6px 0 14px;
+}
+
+.vs-docs-block {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--grey-line);
+}
+/* A step marker, not a field label. It sits directly above navy uppercase
+   field labels, so it takes the sand accent and tighter type the rest of
+   the tool uses for markers — otherwise the two read as one stuttering
+   heading ("STEP 3 · TRANSLATION SPEED" / "HOW FAST WILL YOU TRANSLATE?"). */
+.vs-block-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #78693f;
+  margin-bottom: 14px;
+}
+.vs-block-hint {
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--grey-text);
+  margin-bottom: 14px;
+  max-width: 80ch;
+}
+.vs-docrow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 10px 18px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--grey-line);
+}
+.vs-docrow.is-done { opacity: 0.55; }
+.vs-docname { margin-bottom: 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.vs-docname input { width: 100%; }
+.vs-suggested, .vs-links-lead {
+  font-size: 0.72rem;
+  color: #78693f;
+  letter-spacing: 0.02em;
+}
+.vs-toggles { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.vs-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  color: var(--navy);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.vs-check input { width: 15px; height: 15px; accent-color: var(--navy); }
+
+.vs-remove {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--grey-text);
+  font-family: inherit;
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-bottom: 1px solid var(--grey-line);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.vs-remove:hover { color: #8c2f2f; border-color: #8c2f2f; }
+
+.vs-add {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.vs-add .form-field { flex: 1 1 320px; margin-bottom: 0; min-width: 0; }
+.vs-hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: var(--grey-text);
+}
+
+.vs-b-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.vs-b-grid .form-field { margin-bottom: 0; min-width: 0; }
+.vs-b-grid select, .vs-b-grid input { max-width: 100%; }
+
+/* --- The standing volatility alert (Phase B) --- */
+.vs-alert {
+  border: 1px solid rgba(176, 85, 47, 0.5);
+  border-left: 4px solid #b0552f;
+  background: rgba(176, 85, 47, 0.06);
+  border-radius: 14px;
+  padding: 18px var(--prose-inset);
+  margin-bottom: 30px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+.vs-alert b { color: #8c2f2f; font-weight: 600; }
+.vs-alert.is-critical {
+  border-color: rgba(140, 47, 47, 0.7);
+  border-left-color: #8c2f2f;
+  background: rgba(140, 47, 47, 0.09);
+}
+
+/* --- Spine result nodes --- */
+/* The shared .spine caps at 880px for the leveled-timeline pages; here it
+   is a tool result, so it takes the tool column like everything else. */
+.vs-spine { max-width: var(--tool-col); margin-top: 30px; }
+
+.vs-node .vs-when {
+  background: rgba(15, 21, 42, 0.06);
+  color: var(--navy);
+}
+.vs-node h3 { font-size: 1.05rem; }
+.vs-node p { font-size: 0.88rem; }
+
+/* status dot on the spine */
+.vs-node--past::before   { border-color: #b0552f; }
+.vs-node--tight::before  { border-color: #b9a97f; }
+.vs-node--ok::before     { border-color: #2f7d4f; }
+.vs-node--target::before { background: var(--navy); border-color: var(--navy); }
+
+.vs-status {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  padding: 3px 11px;
+  border: 1px solid transparent;
+}
+.vs-status--past  { background: #b0552f; color: var(--beige); }
+.vs-status--tight { background: none; border-color: rgba(185, 169, 127, 0.8); color: #78693f; }
+.vs-status--ok    { background: none; border-color: rgba(47, 125, 79, 0.6); color: #2f7d4f; }
+
+.vs-guide {
+  margin-top: 8px !important;
+  font-size: 0.84rem !important;
+  color: var(--navy) !important;
+  border-top: 1px dashed var(--grey-line);
+  padding-top: 8px;
+}
+.vs-node--past .vs-guide { color: #8c2f2f !important; }
+
+.vs-node--target {
+  background: #fbf9f3;
+  border-style: dashed;
+}
+.vs-node--target .vs-when {
+  background: var(--navy);
+  color: var(--beige);
+}
+
+/* --- Out-links under Phase B --- */
+.vs-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--grey-line);
+}
+.vs-links-lead { flex-basis: 100%; margin-bottom: 2px; color: var(--grey-text); }
+.vs-link {
+  color: var(--navy);
+  text-decoration: none;
+  border: 1px solid rgba(15, 21, 42, 0.3);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.vs-link:hover { background: var(--navy); border-color: var(--navy); color: var(--beige); }
+
+@media (max-width: 860px) {
+  .vs-phases { grid-template-columns: 1fr; }
+  .vs-b-grid { grid-template-columns: 1fr; }
+  .vs-drow { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .vs-drow .vs-remove { grid-column: 1 / -1; justify-self: start; }
+  .vs-docrow { grid-template-columns: 1fr; }
+  .vs-docrow .vs-remove { justify-self: start; }
+}
+
+/* ==========================================================================
+   Guides & FAQ — long-form content (added for the v17 content integration)
+   Bilingual EN/UK is rendered as paired inline spans (.lg-en / .lg-uk) so
+   heading ids stay unique and the table-of-contents anchors work in both
+   languages; the language toggle only flips which span shows.
+   ========================================================================== */
+
+/* --- Bilingual span toggle (matches the html[lang] jargon-gloss pattern) --- */
+.lg-uk { display: none; }
+html[lang="uk"] .lg-en { display: none; }
+html[lang="uk"] .lg-uk { display: inline; }
+
+/* --- Guide hero --- */
+/* .guide-hero / .page-sub.guide-lead used to redefine the hero here.
+   Their values are now the base .page-hero / .page-sub, so the classes
+   stay on the guide pages' markup as harmless hooks and set nothing. */
+.guide-eyebrow {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 7px 17px;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-pill);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+/* --- Guide body column --- */
+.guide-section {
+  padding-top: 8px;
+}
+.guide-prose {
+  max-width: 72ch;
+  counter-reset: gsec;
+}
+
+/* Section headings carry an editorial number ("01", "02", ...) that lines
+   up with the table of contents. */
+.guide-prose h2 {
+  counter-increment: gsec;
+  margin-top: var(--rule-gap);
+  padding-top: var(--rule-pad);
+}
+.guide-prose h2::before {
+  content: counter(gsec, decimal-leading-zero);
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: #b0996a;
+}
+.guide-prose h2:first-child::before { content: none; }
+.guide-prose p {
+  font-size: 1.02rem;
+  line-height: 1.72;
+}
+.guide-prose p strong { color: var(--navy); font-weight: 600; }
+.guide-prose p em { font-style: italic; }
+
+/* --- "In this guide" table of contents --- */
+.guide-toc {
+  margin: 0 0 8px;
+  padding: 28px 32px 30px;
+  background: var(--beige-dim);
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+}
+.guide-toc-label {
+  margin-bottom: 16px;
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+.guide-toc ol {
+  list-style: none;
+  counter-reset: toc;
+  margin: 0;
+  padding: 0;
+  columns: 2;
+  column-gap: 42px;
+}
+.guide-toc li {
+  counter-increment: toc;
+  break-inside: avoid;
+}
+.guide-toc a {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 8px 0;
+  color: var(--grey-text);
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease;
+}
+.guide-toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  flex-shrink: 0;
+  font-family: var(--font-serif);
+  font-size: 0.86rem;
+  color: #b0996a;
+}
+.guide-toc a:hover { color: var(--navy); }
+
+/* --- Closing "Where USUFU fits" panel (navy) --- */
+.guide-usufu {
+  margin: 40px 0 0;
+  padding: 38px 42px;
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(130% 150% at 0% 0%, rgba(35, 44, 78, 0.9), transparent 60%),
+    linear-gradient(160deg, #1a2340 0%, var(--navy) 100%);
+  color: var(--white-text);
+}
+.guide-usufu-label {
+  display: block;
+  margin-bottom: 16px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: var(--beige);
+}
+.guide-usufu p {
+  color: var(--white-text);
+  line-height: 1.72;
+}
+.guide-usufu p:last-child { margin-bottom: 0; }
+.guide-usufu strong { color: var(--beige); font-weight: 600; }
+.guide-usufu em { font-style: italic; color: var(--beige); }
+
+/* --- Verified / time-sensitive note --- */
+.guide-verified {
+  margin-top: 40px;
+  padding: 16px 20px;
+  background: #f2ecdd;
+  border: 1px solid rgba(185, 169, 127, 0.5);
+  border-radius: 14px;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: #6e5f39;
+}
+
+/* --- "Tools mentioned in this guide" band --- */
+.guide-tools-section {
+  padding: var(--sec-y-lg) 0;
+  background: var(--beige-dim);
+  border-top: 1px solid var(--grey-line);
+}
+.guide-tools-head {
+  max-width: 620px;
+  margin: 0 auto var(--head-gap);
+  text-align: center;
+}
+.guide-tools-title {
+  margin-top: 4px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.2;
+}
+.guide-tools-sub {
+  margin-top: 14px;
+  color: var(--grey-text);
+}
+.guide-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(232px, 1fr));
+  gap: 16px;
+  max-width: var(--tool-col);
+  margin: 0 auto;
+}
+.guide-tool {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 24px;
+  background: var(--beige);
+  border: 1px solid var(--grey-line);
+  border-radius: 16px;
+  font-weight: 500;
+  color: var(--navy);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.guide-tool:hover {
+  transform: translateY(-3px);
+  border-color: rgba(15, 21, 42, 0.28);
+  box-shadow: var(--shadow-soft);
+}
+.guide-tool-arrow {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--beige);
+  transition: transform 0.25s ease;
+}
+.guide-tool-arrow svg { width: 17px; height: 17px; }
+.guide-tool:hover .guide-tool-arrow { transform: translateX(3px); }
+
+/* --- FAQ page: thematic group labels between accordion items --- */
+.faq-group {
+  margin: 32px 0 10px;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy-soft);
+}
+.faq-group:first-child { margin-top: 0; }
+.faq-list .faq-group + .faq-item {
+  border-top: 1px solid var(--grey-line);
+}
+/* Multi-paragraph FAQ answers keep even spacing */
+.faq-answer p + p { padding-top: 0; }
+
+@media (max-width: 860px) {
+  .guide-toc { padding: 24px 24px 26px; }
+  .guide-toc ol { columns: 1; }
+  .guide-usufu { padding: 30px 26px; }
+}
+
+/* --- Levels: homepage audience-card one-line descriptor + article intro lead --- */
+.audience-desc {
+  margin-top: 10px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--grey-text);
+  transition: color 0.2s ease;
+}
+.audience-card:hover .audience-desc { color: var(--white-text); }
+
+.guide-prose p.guide-intro {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--navy);
+}
+
+/* --------------------------------------------------------------------------
+   News — honest empty state (news.html)
+
+   The page ships with no posts rather than invented ones. This has to read
+   as a finished, deliberate page, not a broken grid: tool column, centred,
+   same card language as the rest of the site.
+   -------------------------------------------------------------------------- */
+.news-empty {
+  max-width: var(--tool-col);
+  margin: 0 auto;
+  padding: clamp(44px, 6vw, 72px) var(--prose-inset);
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 24px 50px -34px rgba(15, 21, 42, 0.4);
+}
+
+.news-empty h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  color: var(--navy);
+}
+
+.news-empty p {
+  margin-top: 16px;
+  color: var(--grey-text);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.news-empty-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+/* ==========================================================================
+   SAT Prep app page (satprep.html) — v21
+
+   One page describing one product, so the components are local to it rather
+   than added to the shared vocabulary. Two rules the rest of the site already
+   lives by are load-bearing here:
+
+     1. Every bordered box stacked in one column shares one width. The prose,
+        the feature rows, the tile grid, the steps, the download cards and the
+        privacy panel are all --tool-col. A screenshot is the one thing allowed
+        past it, and only in the two deliberate --wide bands.
+     2. A screenshot is content, not decoration. Each is framed the same way —
+        hairline, same radius as a card, navy mat — so a light screen and a
+        dark screen sit in a column without one of them looking like a hole.
+   ========================================================================== */
+
+.sp-hero .guide-eyebrow { margin-bottom: 18px; }
+
+.sp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px 20px;
+  margin-top: 34px;
+}
+
+.sp-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 40px;
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+  color: var(--grey-text);
+}
+/* No mark of any kind between the claims — just the gap.
+   A leading dash reads as a strikethrough through the first word at this size,
+   and a tick makes a row of plain facts look like a pricing comparison. A
+   drawn separator was tried both ways and dangles on either: the Ukrainian
+   list wraps to two lines, so a leading rule hangs at the start of line two
+   and a trailing one hangs at the end of line one. The gap says the same
+   thing and cannot be left over. */
+.sp-badges li {
+  display: flex;
+  align-items: center;
+}
+
+/* --- The screenshot frame ------------------------------------------------ */
+
+.sp-shotband { padding: 6px 0 18px; }
+
+.sp-shot {
+  margin: 0;
+  max-width: var(--tool-col);
+  margin-inline: auto;
+}
+.sp-shot--wide { max-width: var(--container); }
+
+.sp-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  box-shadow: 0 30px 60px -34px rgba(15, 21, 42, 0.55);
+  background: var(--navy);
+}
+.sp-shot figcaption {
+  margin-top: 14px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  text-align: center;
+  color: var(--grey-text);
+}
+
+/* --- Why it exists ------------------------------------------------------- */
+
+.sp-prose .sp-callout {
+  margin-top: 34px;
+  padding: 22px 26px;
+  background: var(--beige-dim);
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  font-size: 0.95rem;
+  color: var(--grey-text);
+}
+
+/* --- Numbered feature rows ----------------------------------------------- */
+
+.sp-features {
+  padding: var(--sec-y-lg) 0 var(--sec-y);
+  background: var(--beige-dim);
+  border-block: 1px solid var(--grey-line);
+}
+
+.sp-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 54px;
+  align-items: center;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 54px 0;
+  border-top: 1px solid var(--grey-line);
+}
+.sp-row:first-of-type { border-top: 0; padding-top: 0; }
+/* The image leads on the even rows, so the eye is not walked down one edge.
+   The column template has to flip with it: leaving it alone puts the picture
+   in the narrow column and the words in the wide one, so alternate rows come
+   out with alternate screenshot sizes. */
+.sp-row--flip { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); }
+.sp-row--flip .sp-row-body { order: 2; }
+
+.sp-index {
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--grey-line);
+}
+.sp-row-body h3 {
+  margin: 0 0 16px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.4vw, 1.95rem);
+  font-weight: 600;
+  line-height: 1.18;
+  color: var(--navy);
+}
+.sp-row-body p {
+  margin: 0 0 14px;
+  color: var(--grey-text);
+  line-height: 1.75;
+}
+.sp-row-body p:last-child { margin-bottom: 0; }
+
+/* --- The tile grid ------------------------------------------------------- */
+
+.sp-more { padding: var(--sec-y-lg) 0 var(--sec-y); }
+
+.sp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  max-width: var(--container);
+  margin: 0 auto;
+}
+.sp-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 26px 26px 24px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.sp-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 44px -30px rgba(15, 21, 42, 0.45);
+}
+.sp-tile h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.16rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.sp-tile p {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.7;
+  color: var(--grey-text);
+}
+.sp-tile code,
+.sp-step code,
+.sp-faq code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--beige-dim);
+  color: var(--navy);
+  overflow-wrap: anywhere;
+}
+
+/* --- Getting started ----------------------------------------------------- */
+
+.sp-start {
+  padding: var(--sec-y-lg) 0 var(--sec-y);
+  background: var(--beige-dim);
+  border-block: 1px solid var(--grey-line);
+}
+
+.sp-steps {
+  counter-reset: spstep;
+  list-style: none;
+  max-width: var(--tool-col);
+  margin: 0 auto 36px;
+  padding: 0;
+}
+.sp-step {
+  counter-increment: spstep;
+  position: relative;
+  padding: 30px 34px 28px 96px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-radius: var(--radius-card);
+}
+.sp-step + .sp-step { margin-top: 16px; }
+.sp-step::before {
+  content: counter(spstep, decimal-leading-zero);
+  position: absolute;
+  left: 34px;
+  top: 30px;
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--grey-line);
+}
+.sp-step h3 {
+  margin: 0 0 12px;
+  font-family: var(--font-serif);
+  font-size: 1.28rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.sp-step p {
+  margin: 0 0 12px;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--grey-text);
+}
+.sp-step p:last-child { margin-bottom: 0; }
+
+/* --- Pre-release: gallery, release panel, notify card --------------------- */
+
+/* The second line of the hero, which says the app is not out yet. Set apart
+   from the lead above it so the claim is not read as part of the pitch. */
+.sp-lead-note {
+  margin-top: 16px;
+  padding-top: 18px;
+  border-top: 1px solid var(--grey-line);
+  font-size: 0.98rem;
+}
+
+.sp-gallery-band { padding: var(--sec-y-lg) 0 var(--sec-y-sm); }
+
+/* Two columns of figures. Each keeps its own caption, so the grid aligns on
+   the figure rather than on the text — a caption of a different length must
+   not push the picture beside it down. */
+.sp-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(22px, 3vw, 38px);
+  align-items: start;
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+.sp-gallery .sp-shot { max-width: none; margin: 0; }
+
+.sp-release { padding-top: var(--sec-y-lg); }
+
+/* Four tiles, so two columns rather than the shared three — three would leave
+   the fourth alone on a row of its own. */
+.sp-release .sp-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: var(--tool-col);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 760px) {
+  .sp-release .sp-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+.sp-notify {
+  max-width: var(--tool-col);
+  margin: 22px auto 0;
+  padding: 30px 38px 34px;
+  background: #ffffff;
+  border: 1px solid var(--grey-line);
+  border-left: 3px solid #b9a97f;
+  border-radius: var(--radius-card);
+}
+
+.sp-notify h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.24rem;
+  color: var(--navy);
+}
+
+.sp-notify p {
+  margin: 10px 0 20px;
+  font-size: 0.96rem;
+  line-height: 1.75;
+  color: var(--grey-text);
+}
+
+@media (max-width: 860px) {
+  .sp-gallery { grid-template-columns: minmax(0, 1fr); }
+  .sp-notify { padding-left: 22px; padding-right: 22px; }
+}
+
+.sp-privacy {
+  max-width: var(--tool-col);
+  margin: 30px auto 0;
+  padding: 34px 38px;
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(130% 150% at 0% 0%, rgba(35, 44, 78, 0.9), transparent 60%),
+    linear-gradient(160deg, #1a2340 0%, var(--navy) 100%);
+  color: var(--white-text);
+}
+.sp-privacy p {
+  margin: 0;
+  line-height: 1.8;
+}
+
+/* --- Inline links --------------------------------------------------------
+   Scoped to this page on purpose. The site has no global inline-link style,
+   so an <a> inside body copy currently inherits --grey-text and renders
+   indistinguishable from the words around it. That is worth fixing site-wide,
+   but not as a side effect of adding a page — here the new copy at least
+   marks its own links. */
+
+.sp-prose p a,
+.sp-step a,
+.sp-tile a,
+.sp-faq .faq-answer a,
+.sp-faq .fin-note a {
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(15, 21, 42, 0.35);
+  transition: text-decoration-color 0.2s ease;
+}
+.sp-prose p a:hover,
+.sp-step a:hover,
+.sp-tile a:hover,
+.sp-faq .faq-answer a:hover,
+.sp-faq .fin-note a:hover {
+  text-decoration-color: var(--navy);
+}
+
+/* --- FAQ ----------------------------------------------------------------- */
+
+.sp-faq { padding-top: var(--sec-y-lg); }
+.sp-faq .faq-list {
+  max-width: var(--tool-col);
+  margin: 0 auto;
+}
+.sp-faq .fin-note {
+  max-width: var(--tool-col);
+  margin: 34px auto 0;
+}
+
+/* --- Narrow --------------------------------------------------------------- */
+
+@media (max-width: 980px) {
+  .sp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 860px) {
+  .sp-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding: 38px 0;
+  }
+  /* The image goes under the words on every row: alternating sides is a
+     two-column idea, and in one column it only shuffles the reading order. */
+  .sp-row--flip .sp-row-body { order: 0; }
+  .sp-grid,
+  .sp-dl-grid { grid-template-columns: minmax(0, 1fr); }
+  .sp-features,
+  .sp-start { padding: 54px 0 60px; }
+  .sp-more,
+  .sp-downloads,
+  .sp-faq { padding-top: 54px; }
+  .sp-step {
+    padding: 26px 24px 24px;
+  }
+  .sp-step::before {
+    position: static;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .sp-privacy { padding: 28px 24px; }
+  .sp-badges { gap: 8px 18px; }
+  /* The hero's hand-placed line breaks are set for the desktop measure. At
+     375px they rewrap and, in Ukrainian, strand the em dash on a line of its
+     own. The narrow column has no widow to fix, so drop them. */
+  .sp-hero .page-title br,
+  .sp-features .section-title br,
+  .sp-more .section-title br,
+  .sp-downloads .section-title br { display: none; }
+}
+
+
+/* ==========================================================================
+   Print
+   Students and parents genuinely print these pages — a checklist, a set of
+   deadlines, a cost breakdown to talk through at the kitchen table. Without
+   this block a printout carried the fixed nav across every page, burned ink
+   on the navy bands, and — worst — came out with blank gaps, because every
+   .reveal block sits at opacity 0 until the visitor has scrolled past it.
+   ========================================================================== */
+@media print {
+  /* 1. Nothing that only exists to navigate a screen. */
+  .site-header,
+  .skip-link,
+  .search-overlay,
+  .intro,
+  .lang-splash,
+  .closing-band,
+  .footer-socials,
+  .breadcrumb,
+  .nav-toggle,
+  .hstrip-nav,
+  .media-frame,
+  .help-media,
+  .bento-panel,
+  .dl-thumb,
+  .hub-glyph,
+  .pathway-media {
+    display: none !important;
+  }
+
+  /* 2. Un-hide anything the scroll observer had not reached yet. */
+  .reveal,
+  .reveal-left,
+  .reveal-right {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* 3. A printed accordion of questions with no answers is useless. */
+  .faq-answer {
+    display: block !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  .faq-icon { display: none; }
+
+  /* 4. Ink. The dark bands and card shadows cost a lot and add nothing. */
+  html,
+  body,
+  .closing-band,
+  .site-footer,
+  .countdown-card,
+  .dark-section {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  body::before { display: none !important; }
+  .calc-card,
+  .hub-card,
+  .cl-card,
+  .af-card,
+  .fg-card,
+  .dl-card,
+  .contact-card,
+  .tb-intro,
+  .uac-note,
+  .vs-alert {
+    box-shadow: none !important;
+    border: 1px solid #999 !important;
+    background: #fff !important;
+  }
+  .site-footer * { color: #000 !important; }
+
+  /* 5. A printed link is a dead end unless its address comes with it.
+        In-page anchors and javascript hooks are skipped deliberately. */
+  main a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    word-break: break-all;
+  }
+
+  /* 6. Keep a card, a result or a timeline stop whole across a page break. */
+  .calc-card,
+  .hub-card,
+  .cl-card,
+  .af-card,
+  .fg-card,
+  .dl-card,
+  .faq-item,
+  .spine-item,
+  .vs-node,
+  .guide-prose h2 {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .guide-prose h2,
+  .section-title {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* 7. Full measure — the on-screen column caps waste half the paper. */
+  .container { width: 100% !important; max-width: none !important; }
+  .calc-card,
+  .tb-intro,
+  .uac-note,
+  .vs-alert,
+  .guide-prose { max-width: none !important; }
+
+  @page { margin: 16mm; }
+}

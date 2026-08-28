@@ -1,0 +1,10 @@
+# GitHub Pages build configuration.
+#
+# This repository contains the published site and nothing else — no build
+# tooling, no shelved pages, no notes. Everything here is meant to be served,
+# so there is nothing to exclude from the build.
+#
+# Jekyll would otherwise skip files and folders beginning with an underscore,
+# so do not name any served asset that way.
+include:
+  - CNAME
