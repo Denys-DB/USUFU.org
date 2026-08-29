@@ -428,6 +428,15 @@
   align-items: start;
 }
 
+/* Grid and flex children default to min-width:auto — they refuse to shrink
+   below their content's min-content width. Without this the contact column
+   is propped open by the widest <select> option and runs off the side of a
+   phone. See the note on the field controls below. */
+.contact-layout > *,
+.form-field {
+  min-width: 0;
+}
+
 .contact-cards {
   display: grid;
   gap: 14px;
@@ -495,6 +504,14 @@
 .form-field input,
 .form-field select,
 .form-field textarea {
+  /* A <select> takes its intrinsic width from its LONGEST option and will not
+     shrink on its own. The Ukrainian destination option ("Питання або
+     інформація — info@usufu.org") is wider than the English one, so on a phone
+     it pushed the whole form past the right edge. Let the control shrink and
+     clip the option text instead of the layout. */
+  min-width: 0;
+  max-width: 100%;
+  text-overflow: ellipsis;
   padding: 13px 16px;
   /* 16px minimum — anything smaller makes iOS Safari zoom in on focus */
   font: 300 1rem var(--font-sans);
