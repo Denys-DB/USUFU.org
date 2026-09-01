@@ -64,13 +64,24 @@
   --ink: #121317;
   --ink-hover: #23252c;
   --grey-line: rgba(15, 21, 42, 0.12);
-  --grey-text: rgba(15, 21, 42, 0.66);
-  /* Source lines, provenance notes and other small print. Quieter than
-     --grey-text but still >=5:1 on beige AND on the sand notice surface —
-     the old rgba(...,0.45) measured 2.95:1, well under the 4.5:1 minimum. */
-  --grey-faint: rgba(15, 21, 42, 0.62);
+  /* Body copy that is not a heading: intros, card text, guide prose, form
+     hints. Darkened from 0.66 (5.80:1) to 0.78 (8.92:1) on beige — readers
+     found the old value washed out, and it sat only 29% of the way from the
+     page background to a full-navy heading, which read as disabled text
+     rather than as prose. It is now ~47% of the way: clearly darker, still
+     clearly subordinate to a heading. */
+  --grey-text: rgba(15, 21, 42, 0.78);
+  /* Source lines, provenance notes and other small print. Deliberately one
+     step quieter than --grey-text so the hierarchy survives; raised with it
+     from 0.62 to 0.72 (7.18:1 on beige, 6.69:1 on the sand notice surface).
+     Never take this below ~0.55 — an earlier rgba(...,0.45) measured 2.95:1,
+     well under the 4.5:1 minimum. */
+  --grey-faint: rgba(15, 21, 42, 0.72);
   --white-line: rgba(254, 253, 250, 0.16);
-  --white-text: rgba(254, 253, 250, 0.72);
+  /* The same role as --grey-text, inverted for navy sections and the footer.
+     Raised 0.72 -> 0.82 (9.53:1 -> 12.10:1) so light and dark surfaces read
+     with matching weight. */
+  --white-text: rgba(254, 253, 250, 0.82);
 
   /* Typography — "USUFU Numerals" only covers digits (see @font-face
      above), so numbers get Proxima Nova while letters keep the brand
