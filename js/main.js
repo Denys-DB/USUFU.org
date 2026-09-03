@@ -801,21 +801,57 @@
   /* ------------------------------------------------------------------
      11. Scroll-in reveal animation
      ------------------------------------------------------------------ */
-  const revealObserver = new IntersectionObserver(
-    function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.15 }
-  );
+  const revealTargets = document.querySelectorAll(".reveal, .reveal-left, .reveal-right");
 
-  document.querySelectorAll(".reveal, .reveal-left, .reveal-right").forEach(function (element) {
-    revealObserver.observe(element);
-  });
+  function revealAll() {
+    // Skip the fade. A renderer that never scrolls may also have its CSS
+    // transitions frozen (a background tab does exactly this), so the class
+    // alone could still snapshot at opacity 0. This makes it immediate.
+    document.documentElement.classList.add("reveal-instant");
+    revealTargets.forEach(function (element) {
+      element.classList.add("is-visible");
+    });
+  }
+
+  if (!("IntersectionObserver" in window)) {
+    // No observer means nothing would ever un-hide the page. Show it.
+    revealAll();
+  } else {
+    const revealObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    revealTargets.forEach(function (element) {
+      revealObserver.observe(element);
+    });
+
+    // Failsafe. Nearly every word on a page sits inside a .reveal, which
+    // starts at opacity:0 — so anything that renders the page WITHOUT
+    // scrolling captures it almost blank: Googlebot (it runs JS, so the
+    // <noscript> fallback never applies to it), social-preview scrapers,
+    // headless screenshots.
+    //
+    // Gated on a scroll having happened, so this never costs a real reader
+    // the animation: scrolling is the signal that someone is actually
+    // reading, and from then on the observer alone drives the reveal. Only
+    // a visitor who has not scrolled at all after three seconds — which is
+    // every non-human renderer — gets the whole page shown at once, and by
+    // definition they are not watching anything fade.
+    var hasScrolled = false;
+    window.addEventListener("scroll", function () { hasScrolled = true; },
+                            { once: true, passive: true });
+    window.setTimeout(function () {
+      if (!hasScrolled) revealAll();
+    }, 3000);
+  }
 
   /* ------------------------------------------------------------------
      12. Number inputs vs. the mouse wheel

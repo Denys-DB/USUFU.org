@@ -341,6 +341,16 @@ button {
   transform: none;
 }
 
+/* Set by the failsafe in main.js when the page is revealed without anyone
+   having scrolled. Dropping the transition matters because a renderer that
+   does not scroll often has transitions frozen too, and would otherwise
+   capture the page mid-fade at opacity 0. */
+.reveal-instant .reveal,
+.reveal-instant .reveal-left,
+.reveal-instant .reveal-right {
+  transition: none;
+}
+
 /* The reveal classes start at opacity 0 and are un-hidden by an observer in
    js/main.js. If that script never runs — JS disabled, a blocked file, a
    parse error — the content would stay invisible forever. Each page carries
@@ -1302,6 +1312,16 @@ body.intro-lock {
 @media (prefers-reduced-motion: reduce) {
   .intro {
     display: none;
+  }
+
+  /* Someone who asked for less motion should not have to scroll through an
+     animation to see the page at all — every block starts visible. */
+  .reveal,
+  .reveal-left,
+  .reveal-right {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 
