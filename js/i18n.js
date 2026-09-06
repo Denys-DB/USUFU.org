@@ -1540,6 +1540,7 @@ window.USUFU_I18N = (function () {
 
     // ==== v6: levels language, ask-us page, calculator card ====
     "Levels": "Рівні",
+    "For Parents": "Для батьків",
     "Discover Your Level": "Дізнайтеся свій рівень",
     "Discover your level": "Дізнайтеся свій рівень",
     "Discover the levels": "Пізнай рівні",
