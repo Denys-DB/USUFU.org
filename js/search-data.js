@@ -159,7 +159,7 @@ window.USUFU_SEARCH_INDEX = [
     text: "Work backward from your application deadline or program start date to the latest safe date to begin each step — apostille, translation, SEVIS, and the third-country interview.",
     keywords: "visa scheduler f1 f-1 sevis i-901 apostille translation interview appointment wait time third country warsaw prague embassy kyiv i-20 deadline timeline backward schedule documents passport",
     uk: "віза графік апостиль переклад співбесіда посольство сертифікат sevis дедлайн терміни документи третя країна варшава прага розклад"},
-  { path: "About", title: "USUFU SAT Prep — the app", url: "satprep.html",
+  { path: "About", title: "USUFU SAT & AP Prep — the app", url: "satprep.html",
     text: "Coming soon — our free desktop app: turn a College Board Question Bank PDF into a practice test that behaves like Bluebook.",
     keywords: "sat prep app coming soon release preview desktop mac macos windows linux bluebook question bank practice test psat nmsqt timed flashcards vocabulary offline free college board digital sat module adaptive statistics spaced repetition",
     uk: "sat підготовка застосунок програма завантажити мак віндовс лінукс блубук банк питань тренувальний тест psat картки словник офлайн безкоштовно"},

@@ -6953,7 +6953,10 @@ html[lang="uk"] .lg-uk { display: inline; }
   border: 1px solid var(--grey-line);
   border-radius: var(--radius-card);
   box-shadow: 0 30px 60px -34px rgba(15, 21, 42, 0.55);
-  background: var(--navy);
+  /* Was var(--navy): behind a beige screenshot that reads as a dark frame
+     while the image loads. The shots fill their box, so this only shows
+     during load — it should match the app's paper, not contradict it. */
+  background: var(--beige-dim);
 }
 .sp-shot figcaption {
   margin-top: 14px;
@@ -7151,6 +7154,39 @@ html[lang="uk"] .lg-uk { display: inline; }
 }
 
 .sp-gallery .sp-shot { max-width: none; margin: 0; }
+
+/* One shape for every tile. The shots are produced at 1440x900 by
+   Tools/promoshot, so this only enforces what is already true — but it means a
+   picture of the wrong shape crops instead of dragging its row out of line,
+   which is what made the old gallery look scattered (ratios ran 0.86 to 2.00). */
+.sp-gallery .sp-shot img {
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* A heading inside the gallery, so the tiles read as three groups — the SAT
+   screens, the AP screens, and the two papers — rather than as one long run. */
+.sp-gallery-label {
+  max-width: var(--container);
+  margin: 0 auto 18px;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey-text);
+}
+.sp-gallery-label:not(:first-of-type) { margin-top: 46px; }
+
+/* The formula sheet is wide and short, and gets a full-width slot of its own
+   rather than being forced into a 16:10 tile with empty space above and below. */
+.sp-shot--sheet { margin-top: 46px; }
+.sp-shot--sheet img { aspect-ratio: auto; object-fit: contain; }
+
+@media (max-width: 760px) {
+  .sp-gallery { grid-template-columns: minmax(0, 1fr); }
+}
 
 .sp-release { padding-top: var(--sec-y-lg); }
 

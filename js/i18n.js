@@ -2617,6 +2617,7 @@ window.USUFU_I18N = (function () {
        v21.1 moved the app out of the Useful hub and into its own About entry,
        so the three hub-card strings that lived here are gone with it. */
     "SAT Prep App": "Застосунок SAT Prep",
+    "SAT & AP Prep App": "Застосунок SAT та AP Prep",
     "USUFU SAT Prep": "USUFU SAT Prep",
     "Test Prep · Desktop app": "Підготовка до тестів · Застосунок",
     "Our own app. Turn a College Board question bank export into a practice test that behaves like Bluebook — timed, graded, offline, free.": "Наш власний застосунок. Перетворіть експорт із банку питань College Board на тренувальний тест, що поводиться як Bluebook — із хронометражем, оцінюванням, офлайн і безкоштовно.",
