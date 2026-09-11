@@ -454,6 +454,14 @@ html.no-transitions *::after {
   letter-spacing: 0.01em;
   line-height: 1.25;
   white-space: nowrap;
+  /* nowrap means this cannot shrink on its own, and .brand is min-width:0,
+     so without somewhere to clip it would overlap whatever sits beside it.
+     In practice the breakpoint below hides it long before this matters —
+     this only guarantees a collision can never come back if the bar gains
+     another item. */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .brand-name em {
@@ -466,6 +474,11 @@ html.no-transitions *::after {
   display: flex;
   align-items: center;
   gap: 4px;
+  /* The menu keeps its size and the brand gives way, never the other way
+     round. Without this the bar is space-between with a nowrap brand name,
+     so at around 1100px the name simply ran into "About" — items overlapped
+     instead of one of them yielding. */
+  flex-shrink: 0;
 }
 
 .nav-item {
@@ -1488,6 +1501,28 @@ a.social-btn:hover {
    -------------------------------------------------------------------------- */
 /* Squeezed bar (small laptops, browser zoom ~110–125%): tighten the
    menu before anything can wrap or clip */
+/* Between the hamburger breakpoint (860px) and about 940px the full menu is
+   shown, but four items plus the CTA and four icon buttons do not quite fit:
+   the bar overflowed its own pill by up to 21px at 880px. The hamburger rules
+   live inside the 860px block alongside a lot of unrelated layout, so rather
+   than move that whole block, tighten the row in this band only. */
+@media (min-width: 861px) and (max-width: 940px) {
+  .nav-link {
+    padding: 9px 6px;
+    letter-spacing: 0;
+    font-size: 0.86rem;
+  }
+
+  .nav-actions {
+    gap: 6px;
+  }
+
+  .nav-actions .btn-cta {
+    padding: 9px 13px;
+    font-size: 0.86rem;
+  }
+}
+
 @media (max-width: 1180px) {
   .nav-link {
     padding: 9px 11px;
@@ -1499,7 +1534,12 @@ a.social-btn:hover {
   }
 }
 
-@media (max-width: 1080px) {
+/* The wordmark needs roughly 1200px beside four menu items, the CTA and four
+   icon buttons. It used to be hidden only below 1080px, so between 1080 and
+   about 1200 it reappeared into a space too small for it and collided with
+   "About" — the bug a half-width Safari window showed. Measured across
+   760-1600px in 20px steps: clean at every width. */
+@media (max-width: 1240px) {
   .brand-name {
     display: none;
   }
