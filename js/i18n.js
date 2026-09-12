@@ -113,12 +113,12 @@ window.USUFU_I18N = (function () {
     "Students, families, and anyone curious about USUFU or the US university path. No question is too small.": "Учні, родини та всі, хто цікавиться USUFU або вступом до американських університетів. Надто дрібних запитань не буває.",
     "Partners & organizations": "Партнери та організації",
     "Universities, educators, NGOs, and institutions looking to collaborate or partner with USUFU.": "Університети, педагоги, НГО та установи, які хочуть співпрацювати або партнерувати з USUFU.",
-    "SAT app & website support": "Підтримка додатку SAT та сайту",
-    "Something broken? Report an issue with the SAT Prep app or anything on this website.": "Щось не працює? Повідомте про проблему з додатком SAT Prep або будь-чим на цьому сайті.",
+    "USUFU Prep & website support": "Підтримка USUFU Prep та сайту",
+    "Something broken? Report an issue with USUFU Prep or anything on this website.": "Щось не працює? Повідомте про проблему з USUFU Prep або будь-чим на цьому сайті.",
     "Who are you writing to?": "Кому ви пишете?",
     "Question or info — info@usufu.org": "Питання або інформація — info@usufu.org",
     "Partner or organization — contact@usufu.org": "Партнер або організація — contact@usufu.org",
-    "SAT app or website issue — support@usufu.org": "Проблема з додатком SAT або сайтом — support@usufu.org",
+    "USUFU Prep or website issue — support@usufu.org": "Проблема з USUFU Prep або сайтом — support@usufu.org",
     "This form is not connected yet. You can write your message and check the wording, but it will not be delivered until our address is live.": "Ця форма ще не підключена. Ви можете написати повідомлення й перевірити формулювання, але воно не буде доставлене, доки наша адреса не запрацює.",
     "Sending opens your own email app with the message already written, so you can send it from there.": "Після натискання відкриється ваш поштовий застосунок із уже готовим листом, і ви зможете надіслати його звідти.",
     "Your message goes straight to us — no email app needed.": "Ваше повідомлення надходить одразу до нас — поштовий застосунок не потрібен.",
@@ -2610,7 +2610,7 @@ window.USUFU_I18N = (function () {
     "Filled in from your saved shortlist and Record Helper — edit anything freely.": "Заповнено з вашого збереженого списку та Помічника для документів — змінюйте будь-що вільно.",
     "Carried over from your earlier tools: {school}. Change it if you are attending elsewhere.": "Перенесено з ваших попередніх інструментів: {school}. Змініть, якщо навчатиметеся деінде.",
 
-    /* ---- SAT Prep app page (v21) ----
+    /* ---- USUFU Prep page (v21) ----
        The page's own long-form copy uses the .lg-en/.lg-uk two-block toggle,
        the same as the guides. These are the strings that live OUTSIDE it: the
        About-menu entry and the Materials card, which are i18n-driven.
