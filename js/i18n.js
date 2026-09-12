@@ -2616,13 +2616,13 @@ window.USUFU_I18N = (function () {
        About-menu entry and the Materials card, which are i18n-driven.
        v21.1 moved the app out of the Useful hub and into its own About entry,
        so the three hub-card strings that lived here are gone with it. */
-    "SAT Prep App": "Застосунок SAT Prep",
-    "SAT & AP Prep App": "Застосунок SAT та AP Prep",
-    "USUFU SAT Prep": "USUFU SAT Prep",
+    
+    "USUFU Prep": "USUFU Prep",
+    
     "Test Prep · Desktop app": "Підготовка до тестів · Застосунок",
     "Our own app. Turn a College Board question bank export into a practice test that behaves like Bluebook — timed, graded, offline, free.": "Наш власний застосунок. Перетворіть експорт із банку питань College Board на тренувальний тест, що поводиться як Bluebook — із хронометражем, оцінюванням, офлайн і безкоштовно.",
     "macOS, Windows & Linux": "macOS, Windows і Linux",
-    "Open the USUFU SAT Prep page": "Відкрити сторінку USUFU SAT Prep",
+    "Open the USUFU Prep page": "Відкрити сторінку USUFU Prep",
 
     /* ---- Ask Us page rebuilt around the origin story (v23.2) ---- */
     "No appointments, no gatekeepers and no fee — a question sent to us is read by a person who has been where you are.": "Ні запису, ні посередників, ні плати — питання, надіслане нам, читає людина, яка була там, де ви зараз.",
@@ -2690,7 +2690,7 @@ window.USUFU_I18N = (function () {
     "Test Prep · Desktop app · Coming soon": "Підготовка до тестів · Застосунок · Незабаром",
     "Our own app, still in testing. It turns a College Board question bank export into a practice test that behaves like Bluebook — timed, graded, offline, free. See what it does and ask to be told when it is out.": "Наш власний застосунок, ще на тестуванні. Він перетворює експорт із банку питань College Board на тренувальний тест, що поводиться як Bluebook: із таймером, оцінюванням, офлайн і безкоштовно. Подивіться, що він робить, і попросіть повідомити вам про вихід.",
     "Not released yet": "Ще не випущено",
-    "See the USUFU SAT Prep app": "Подивитися застосунок USUFU SAT Prep",
+    "See the USUFU Prep app": "Подивитися застосунок USUFU Prep",
 
     /* ---- Get Involved, expanded (v24) ----
        Volunteer: representatives across the U.S. Partner: schools,
